@@ -89,15 +89,15 @@ export default function Manifesto() {
           {/* ficha técnica — entra cuando el manifesto terminó de llenarse */}
           <div style={{ opacity: sheet, transform: `translateY(${(1 - sheet) * 26}px)`, marginTop: '4rem' }}>
             <dl className="st-sheet">
-              <div><dt>Property</dt><dd>Pineville Estate</dd></div>
-              <div><dt>Location</dt><dd>Newtown, PA</dd></div>
-              <div><dt>Price</dt><dd className="st-num">$18.8M</dd></div>
-              <div><dt>Beds / Baths</dt><dd className="st-num">4 / 6</dd></div>
-              <div><dt>Total area</dt><dd className="st-num">147.73 ac</dd></div>
+              <div><dt>Property</dt><dd>71 Morningside Rd</dd></div>
+              <div><dt>Location</dt><dd>Ocean City, NJ</dd></div>
+              <div><dt>Price</dt><dd className="st-num">$5.995M</dd></div>
+              <div><dt>Beds / Baths</dt><dd className="st-num">6 / 5</dd></div>
+              <div><dt>Status</dt><dd>For Sale</dd></div>
             </dl>
             <p className="st-body" style={{ marginTop: '1.8rem' }}>
-              From a family of top-producing agents and investors, Andrea builds every sale on the
-              same three foundations — and the flagship listing carries all of them.
+              From a family of top-producing agents and investors, Andrea brings the same three
+              foundations to every sale at the Jersey Shore — starting with the flagship on Morningside Road.
             </p>
           </div>
         </div>

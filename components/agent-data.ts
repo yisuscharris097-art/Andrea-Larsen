@@ -14,6 +14,13 @@ export const agent = {
   photo: '/andrea-perfil.jpg',
   photoIsPlaceholder: true,
 
+  office: {
+    name: 'Berkshire Hathaway HomeServices Fox & Roach, REALTORS®',
+    address: '730 West Avenue, Ocean City, NJ 08226',
+    phone: '(856) 448-2229',
+  },
+  market: 'Ocean City & the Jersey Shore',
+  compliance: 'Equal Housing Opportunity. Licensed in New Jersey, Florida and Arizona.',
   contact: {
     phone: '561-888-3494',
     sms: '561-888-3494',

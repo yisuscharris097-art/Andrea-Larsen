@@ -6,8 +6,9 @@
  * en dos esquinas. Lima solo aquí (sobre oscuro).
  */
 
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { listings } from '@/components/listings-data';
+import { properties } from '@/lib/properties';
 import { Reveal, Line } from './ui';
 
 export default function Collections() {
@@ -40,26 +41,20 @@ export default function Collections() {
 
         <Reveal>
           <div role="list">
-            {listings.map((l, i) => {
-              const [addr, city] = l.title.split(/,(.+)/);
-              const sqft = (l.specs || '').split('·').map((s) => s.trim()).find((s) => /sq ft/i.test(s)) || l.price;
-              return (
-                <a
-                  key={l.title}
-                  role="listitem"
-                  className="st-row"
-                  href={l.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={() => setHover(i)}
-                  onMouseLeave={() => setHover(-1)}
-                >
-                  <span className="r-name">{addr}</span>
-                  <span className="r-loc">{(city || '').trim()}</span>
-                  <span className="r-size">{sqft}</span>
-                </a>
-              );
-            })}
+            {properties.map((p, i) => (
+              <Link
+                key={p.slug}
+                role="listitem"
+                className="st-row"
+                href={`/listing/${p.slug}`}
+                onMouseEnter={() => setHover(i)}
+                onMouseLeave={() => setHover(-1)}
+              >
+                <span className="r-name">{p.address}</span>
+                <span className="r-loc">{p.city}, {p.state} · {p.status}</span>
+                <span className="r-size">{p.sqft ? `${p.sqft.toLocaleString('en-US')} Sq Ft` : p.beds ? `${p.beds} BD / ${p.baths} BA` : `${p.lotAcres} Acres`}</span>
+              </Link>
+            ))}
           </div>
         </Reveal>
 
@@ -74,7 +69,7 @@ export default function Collections() {
       <div ref={polRef} className={`st-polaroid${hover >= 0 ? ' on' : ''}`} aria-hidden>
         {hover >= 0 && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={listings[hover].thumbnail} alt="" />
+          <img src={properties[hover].photo} alt="" />
         )}
       </div>
     </section>

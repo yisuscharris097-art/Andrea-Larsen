@@ -49,12 +49,12 @@ export default function MapSection() {
           </h2>
           <Fade i={2}>
             <p className="st-body">
-              Bucks County estates, Maryland waterfronts, Florida coast living — Andrea covers the
-              corridors where value and life quality meet, licensed in Arizona, Florida and New Jersey.
+              Beach blocks, bayfronts and boardwalk-close cottages — Andrea covers Ocean City and
+              the Jersey Shore, licensed in New Jersey, Florida and Arizona.
             </p>
           </Fade>
           <Fade i={3}>
-            <a className="st-pill st-pill--solid" style={{ marginTop: '2rem' }} href="https://andrealarsen.foxroach.com/" target="_blank" rel="noopener noreferrer">
+            <a className="st-pill st-pill--solid" style={{ marginTop: '2rem' }} href="/properties" >
               Find nearest properties →
             </a>
           </Fade>

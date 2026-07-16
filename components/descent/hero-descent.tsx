@@ -211,7 +211,7 @@ export default function HeroDescent() {
           Quality // Trust // Legacy //
         </div>
         <div className="st-flank" style={{ right: 'clamp(1.25rem, 4vw, 4rem)', top: '50%', transform: 'translateY(-50%)', textAlign: 'right', opacity: 1 - exitFade * 0.6 }}>
-          Wellington — Miami, FL<br />© 2026
+          Ocean City — Jersey Shore, NJ<br />© 2026
         </div>
 
         {/* luxury text beats — grotesk 500 + itálica serif */}
@@ -333,6 +333,7 @@ function HeroNav({ visible }: { visible: boolean }) {
     <nav className="st-nav" aria-label="Primary" style={{ opacity: visible ? 1 : 0, transition: 'opacity 400ms ease-out', pointerEvents: visible ? 'auto' : 'none' }}>
       <div className="grp">
         <a className="st-pill active" href="#top">Home</a>
+        <a className="st-pill" href="/properties">Properties</a>
         <a className="st-pill" href="#collection">Collection</a>
         <a className="st-pill" href="#agent">About</a>
       </div>

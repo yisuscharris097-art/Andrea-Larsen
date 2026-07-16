@@ -7,14 +7,14 @@
  */
 
 import { useState } from 'react';
-import { listings } from '@/components/listings-data';
+import { properties } from '@/lib/properties';
 import { Reveal, Line, Fade } from './ui';
 
 const SEARCH_BASE = 'https://andrealarsen.foxroach.com/';
 
 export default function Mist() {
   const [i, setI] = useState(0);
-  const stack = [listings[1], listings[3], listings[5]];
+  const stack = [properties[2], properties[4], properties[7]].map((p) => ({ title: `${p.address}, ${p.city} ${p.state}`, thumbnail: p.photo }));
   const next = () => setI((v) => (v + 1) % stack.length);
 
   return (
@@ -41,7 +41,7 @@ export default function Mist() {
                 onSubmit={(e) => { e.preventDefault(); window.open(SEARCH_BASE, '_blank', 'noopener'); }}
               >
                 <input
-                  placeholder="Search location — PA, MD, FL…"
+                  placeholder="Search Ocean City & the Jersey Shore…"
                   aria-label="Search location"
                   style={{ flex: 1, border: '1px solid rgba(35,41,44,0.4)', background: 'transparent', borderRadius: 999, padding: '0.9em 1.4em', fontFamily: 'var(--body)', fontSize: '0.9rem', color: '#23292c', outline: 'none' }}
                 />
@@ -52,8 +52,8 @@ export default function Mist() {
             </Fade>
             <Fade i={4}>
               <p className="st-body" style={{ marginTop: '2rem', color: '#3d4548' }}>
-                A dedicated buyer&apos;s agent across three states — tell Andrea what home means to you,
-                and she&apos;ll find the address that says it.
+                A dedicated buyer&apos;s agent across three states — tell Andrea what summer means to your family,
+                and she&apos;ll find the Ocean City address that says it.
               </p>
             </Fade>
           </Reveal>

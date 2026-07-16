@@ -29,7 +29,7 @@ export default function FooterStudio() {
                 ALL RIGHTS RESERVED.<br />©2026 {agent.name.toUpperCase()}
               </div>
               <div style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                {agent.brokerage}<br />AZ · FL · NJ
+                {agent.office.name}<br />{agent.office.address}<br />Equal Housing Opportunity · NJ · FL · AZ
               </div>
               <div style={{ display: 'flex', gap: '1.6rem' }}>
                 <a href={agent.social.Instagram} target="_blank" rel="noopener noreferrer" style={{ color: '#f4f4f2', textDecoration: 'none' }}>INSTAGRAM</a>

@@ -3,8 +3,8 @@ import { Reveal, Fade } from './ui';
 const PROPS = [
   { t: 'Top 1% in state', d: 'Ranked among the highest-producing agents statewide.' },
   { t: '27+ years of craft', d: 'Sales, marketing and negotiation honed over decades.' },
-  { t: 'Licensed AZ · FL · NJ', d: 'Coast-to-coast reach with local, on-the-ground insight.' },
-  { t: 'Berkshire Hathaway', d: 'HomeServices Fox & Roach — institutional backing.' },
+  { t: 'Ocean City & Jersey Shore', d: 'Beach houses, second homes and shore investments.' },
+  { t: 'Berkshire Hathaway', d: 'HomeServices Fox & Roach — Ocean City, NJ office.' },
 ];
 
 const Icon = ({ i }: { i: number }) => (

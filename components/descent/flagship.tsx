@@ -18,7 +18,7 @@ const PAPER = '#FAF9F7';
 const FONT = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
 const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";
 
-const DETAIL = 'https://andrealarsen.foxroach.com/realestate/details/12814728/465-pineville-road-newtown-pa-18940';
+const DETAIL = '/listing/71-morningside-road';
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 /** progress of p inside [a, b] */
@@ -58,14 +58,14 @@ export default function Flagship() {
   return (
     <div ref={wrapRef} style={{ position: 'relative', height: reduced ? 'auto' : '320vh', background: PAPER }}>
       <section
-        aria-label="The flagship residence — 465 Pineville Road"
+        aria-label="The flagship listing — 71 Morningside Road, Ocean City NJ"
         style={{ position: reduced ? 'relative' : 'sticky', top: 0, height: '100svh', overflow: 'hidden', display: 'grid', placeItems: 'center' }}
       >
         {/* estate photo — clip-path expansion */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/listings/casa-01.jpg"
-          alt="465 Pineville Road, Newtown PA — 147-acre flagship estate"
+          src="/oc/oc-01.jpg"
+          alt="71 Morningside Road, Ocean City NJ — six-bedroom flagship listing"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
             clipPath: `inset(${insetY}% ${insetX}% ${insetY}% ${insetX}%)`,
@@ -87,16 +87,16 @@ export default function Flagship() {
             color: OXBLOOD, opacity: 1 - split, pointerEvents: 'none',
           }}
         >
-          ● The flagship residence · Coming soon
+          ● The flagship listing · For sale
         </div>
 
         {/* display type that splits as the image devours the stage */}
         <div aria-hidden={split > 0.85} style={{ position: 'relative', zIndex: 2, textAlign: 'center', pointerEvents: 'none' }}>
           <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${-split * 34}vw)`, opacity: 1 - split * 0.92 }}>
-            Pineville
+            Morningside
           </div>
           <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${split * 34}vw)`, opacity: 1 - split * 0.92 }}>
-            Estate
+            Road
           </div>
         </div>
 
@@ -109,33 +109,31 @@ export default function Flagship() {
           }}
         >
           <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: '#E3C173' }}>
-            465 Pineville Road · Newtown, PA · Bucks County
+            71 Morningside Road · Ocean City, NJ · The Jersey Shore
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '1rem 2.4rem', marginTop: '.8rem' }}>
             <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7vw, 6rem)', lineHeight: 0.95, letterSpacing: '-0.02em', color: '#FCFAF6', textShadow: '0 2px 34px rgba(10,8,6,.5)' }}>
-              $18,800,000
+              $5,995,000
             </div>
             <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)', color: '#F0E7D6', textShadow: '0 1px 20px rgba(10,8,6,.6)' }}>
-              4 beds · 6 baths · 8,050 sq ft · 147.73 acres
+              6 beds · 5 baths · minutes from the beach
             </div>
           </div>
           <div style={{ marginTop: '1.7rem', display: 'flex', alignItems: 'center', gap: '1.2rem', flexWrap: 'wrap' }}>
             <Magnetic>
               <a
                 href={DETAIL}
-                target="_blank"
-                rel="noopener noreferrer"
                 style={{
                   display: 'inline-block', fontFamily: FONT, fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase', fontSize: '.74rem',
                   color: INK, background: '#FCFAF6', padding: '1.05rem 2.1rem', borderRadius: 999, textDecoration: 'none',
                   border: '1px solid rgba(255,255,255,.5)', boxShadow: '0 16px 40px rgba(8,6,4,.42)',
                 }}
               >
-                View the estate ↗
+                View the listing →
               </a>
             </Magnetic>
             <span style={{ fontFamily: SERIF, fontStyle: 'italic', color: 'rgba(252,250,246,.85)', fontSize: '1rem', textShadow: '0 1px 16px rgba(10,8,6,.6)' }}>
-              Chosen not for square footage, but for the life it makes possible.
+              Where summer stops being a season and becomes an address.
             </span>
           </div>
         </div>
