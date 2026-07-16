@@ -1,33 +1,29 @@
-import { ParallaxHero } from '@/components/parallax-hero';
+import HeroDescent from '@/components/descent/hero-descent';
 import { HeroParallax } from '@/components/hero-parallax';
 import { ListingGrid } from '@/components/listing-grid';
 import { AgentSection } from '@/components/agent-section';
 import { listings } from '@/components/listings-data';
 
 /*
- * NOTA (REGLA #0): el componente ScrollExpandRealEstate sigue en el repo
- * (components/scroll-expand-real-estate.tsx, intacto) pero queda FUERA del flujo:
- * su scroll-lock global es incompatible con un hero por encima. Reintegrable
- * con un pequeño rework si se desea.
- *   import ScrollExpandRealEstate from '@/components/scroll-expand-real-estate';
+ * NOTA: ParallaxHero (FIND-style) y ScrollExpandRealEstate siguen en el repo,
+ * intactos, pero fuera del flujo: el hero ahora es HeroDescent (el descenso
+ * de drone scrubbeado por scroll que aterriza en Andrea).
  */
 
 export default function Home() {
   return (
     <>
-      {/* 1 · HERO PARALLAX cinematográfico (FIND) — apertura */}
-      <ParallaxHero />
+      {/* 1 · EL DESCENSO — drone scrub: nubes → Miami → familia → Andrea */}
+      <HeroDescent />
 
-      {/* 2 · La colección — parallax 3D + grid seleccionable (existente, intacto) */}
-      <HeroParallax products={listings} />
-      <ListingGrid listings={listings} />
+      {/* 2 · La colección — parallax 3D + grid seleccionable */}
+      <div id="collection">
+        <HeroParallax products={listings} />
+        <ListingGrid listings={listings} />
+      </div>
 
-      {/* 3 · Andrea (nueva) */}
+      {/* 3 · Andrea */}
       <AgentSection />
-
-      {/* ─────────── 4 · DRONE VIDEO FINALE (último efecto de scroll) ───────────
-          Slot reservado para el cierre con el clip de drone (Higgsfield).
-          NO construir aún. ───────────────────────────────────────────────────── */}
     </>
   );
 }
