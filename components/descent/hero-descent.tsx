@@ -7,9 +7,14 @@
  * interior → happy family → settles EXACTLY on Andrea's real photo, then the
  * scroll releases into the collection.
  *
- * Assets: /public/descent/frames/f-000..159.webp (from Seedance 2.0 1080p),
+ * ⚠️ REGLA INTOCABLE: la lógica del video/scrub (frames, Lenis, gate, timing)
+ * no se toca. El rediseño premium vive SOLO en la capa de overlay: wordmark
+ * gigante entrelazado, nav en pills, microtexto editorial en flancos, beats
+ * re-tipografiados (grotesk 500 + itálica serif + guión lima) y hotspots glass
+ * sobre el frame final.
+ *
+ * Assets: /public/descent/frames/f-000..159.webp (Seedance 2.0 1080p),
  *         /public/descent/andrea-final.jpg (real 4K end frame, sharp overlay).
- * Palette: paper #FAF9F7 · ink #1A1714 · oxblood #7A1F1B · gold #C8A45D.
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -19,24 +24,23 @@ const FRAMES = 160;
 const SCRUB_VH = 560; // scroll length of the pinned descent, in vh
 const frameSrc = (i: number) => `/descent/frames/f-${String(i).padStart(3, '0')}.webp`;
 
-const INK = '#1A1714';
-const OXBLOOD = '#7A1F1B';
-const GOLD = '#C8A45D';
-const FONT = "'Archivo', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif";
-const SERIF = "'Cormorant Garamond', Georgia, serif";
+const LIME = '#C8F31D';
+const GROTESK = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
+const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";
+const BODY = "var(--font-body), 'Inter', system-ui, sans-serif";
 
 type Beat = {
   from: number;
   to: number;
-  hard: string;
-  soft?: string;
+  hard: React.ReactNode;
+  soft?: React.ReactNode;
   align: 'left' | 'right' | 'center';
 };
 
 const BEATS: Beat[] = [
-  { from: 0.05, to: 0.22, hard: 'WHERE YOU LIVE', soft: 'changes how you live.', align: 'left' },
-  { from: 0.3, to: 0.45, hard: '27 YEARS. TOP 1%.', soft: 'Berkshire Hathaway HomeServices', align: 'right' },
-  { from: 0.55, to: 0.7, hard: 'THIS IS THE FEELING', soft: 'we sell.', align: 'left' },
+  { from: 0.05, to: 0.22, hard: <>Where you <em>live</em></>, soft: 'changes how you live.', align: 'left' },
+  { from: 0.3, to: 0.45, hard: <>27 years. Top <span style={{ color: LIME }}>–</span>1%.</>, soft: 'Berkshire Hathaway HomeServices', align: 'right' },
+  { from: 0.55, to: 0.7, hard: <>This is the <em>feeling</em></>, soft: 'we sell.', align: 'left' },
   { from: 0.78, to: 0.9, hard: '', soft: 'Meet the one who makes it happen.', align: 'center' },
 ];
 
@@ -164,21 +168,23 @@ export default function HeroDescent() {
 
   const p = progressUi;
   const ended = p >= 0.965;
+  const exitFade = Math.min(1, Math.max(0, (p - 0.02) * 14)); // overlay exit parallax
 
   // ── reduced motion: calm, static hero on the real photo ────────────────────
   if (reduced) {
     return (
-      <section style={{ position: 'relative', minHeight: '100svh', background: INK }}>
+      <section style={{ position: 'relative', minHeight: '100svh', background: '#0d0d0d' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/descent/andrea-final.jpg" alt="Andrea Larsen welcoming you inside a Miami penthouse living room" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,12,10,.72), rgba(15,12,10,.06) 55%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,10,10,.72), rgba(10,10,10,.06) 55%)' }} />
+        <HeroNav visible />
         <FinalCard visible />
       </section>
     );
   }
 
   return (
-    <div ref={wrapRef} style={{ position: 'relative', height: `${SCRUB_VH}vh`, background: INK }}>
+    <div ref={wrapRef} style={{ position: 'relative', height: `${SCRUB_VH}vh`, background: '#0d0d0d' }}>
       <div style={{ position: 'sticky', top: 0, height: '100svh', overflow: 'hidden' }}>
         <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }} aria-hidden />
 
@@ -194,10 +200,21 @@ export default function HeroDescent() {
           }}
         />
 
-        {/* film scrim for text legibility */}
-        <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(15,12,10,.55), rgba(15,12,10,0) 34%), linear-gradient(to bottom, rgba(15,12,10,.3), rgba(15,12,10,0) 22%)' }} />
+        {/* film scrim for text legibility (local, nunca oscurece todo) */}
+        <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(10,10,10,.5), rgba(10,10,10,0) 32%), linear-gradient(to bottom, rgba(10,10,10,.34), rgba(10,10,10,0) 20%)' }} />
 
-        {/* luxury text beats */}
+        {/* nav pills — aparece con el gate y permanece */}
+        <HeroNav visible={!ended} />
+
+        {/* microtexto editorial en flancos (patrón Suffo) */}
+        <div className="st-flank" style={{ left: 'clamp(1.25rem, 4vw, 4rem)', top: '50%', transform: 'translateY(-50%)', opacity: 1 - exitFade * 0.6 }}>
+          Quality // Trust // Legacy //
+        </div>
+        <div className="st-flank" style={{ right: 'clamp(1.25rem, 4vw, 4rem)', top: '50%', transform: 'translateY(-50%)', textAlign: 'right', opacity: 1 - exitFade * 0.6 }}>
+          Wellington — Miami, FL<br />© 2026
+        </div>
+
+        {/* luxury text beats — grotesk 500 + itálica serif */}
         {BEATS.map((b, i) => {
           const active = started && p >= b.from && p <= b.to;
           const local = active ? (p - b.from) / (b.to - b.from) : 0;
@@ -216,55 +233,72 @@ export default function HeroDescent() {
                 opacity: active ? Math.min(1, local * 4, (1 - local) * 4) : 0,
                 transition: 'opacity 180ms ease-out',
                 pointerEvents: 'none',
-                maxWidth: 'min(86vw, 880px)',
+                maxWidth: 'min(88vw, 960px)',
+                zIndex: 8,
               }}
             >
               {b.hard && (
-                <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2rem, 6.4vw, 5.4rem)', lineHeight: 0.98, letterSpacing: '-0.015em', color: '#FCFAF6', textShadow: '0 2px 34px rgba(10,8,6,.55)', textTransform: 'uppercase' }}>
-                  {b.hard}
+                <div style={{ fontFamily: GROTESK, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.4rem, 7.4vw, 6.8rem)', lineHeight: 0.95, letterSpacing: '-0.03em', color: '#FCFCFA', textShadow: '0 2px 34px rgba(8,8,8,.55)' }}>
+                  <BeatText>{b.hard}</BeatText>
                 </div>
               )}
               {b.soft && (
-                <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 500, fontSize: b.hard ? 'clamp(1.3rem, 3vw, 2.4rem)' : 'clamp(1.7rem, 4vw, 3.2rem)', color: '#F2E9DA', textShadow: '0 2px 26px rgba(10,8,6,.6)', marginTop: b.hard ? '0.55rem' : 0 }}>
+                <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: b.hard ? 'clamp(1.3rem, 3vw, 2.5rem)' : 'clamp(1.7rem, 4vw, 3.4rem)', color: '#F0F0EC', textShadow: '0 2px 26px rgba(8,8,8,.6)', marginTop: b.hard ? '0.5rem' : 0 }}>
                   {b.soft}
                 </div>
               )}
-              <div aria-hidden style={{ width: 64, height: 1, background: GOLD, opacity: 0.9, margin: b.align === 'center' ? '1rem auto 0' : b.align === 'right' ? '1rem 0 0 auto' : '1rem 0 0' }} />
             </div>
           );
         })}
 
-        {/* final reveal card */}
+        {/* final reveal: hotspots glass + identity card */}
+        <Hotspots visible={ended} />
         <FinalCard visible={ended} />
 
-        {/* gate */}
+        {/* gate — wordmark gigante + reveal por máscara */}
         <div
           style={{
-            position: 'absolute', inset: 0, display: 'grid', placeItems: 'center',
-            background: 'rgba(14,11,9,.28)', backdropFilter: started ? 'blur(0px)' : 'blur(14px)',
+            position: 'absolute', inset: 0, zIndex: 20, display: 'grid', placeItems: 'center',
+            background: 'rgba(10,9,8,.3)', backdropFilter: started ? 'blur(0px)' : 'blur(14px)',
             WebkitBackdropFilter: started ? 'blur(0px)' : 'blur(14px)',
             opacity: started ? 0 : 1, transition: 'opacity 700ms ease-out, backdrop-filter 900ms ease-out',
-            pointerEvents: started ? 'none' : 'auto',
+            pointerEvents: started ? 'none' : 'auto', overflow: 'hidden',
           }}
         >
-          <div style={{ textAlign: 'center', padding: '0 1.5rem' }}>
-            <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: '.72rem', letterSpacing: '.42em', color: '#EFE7D8', textTransform: 'uppercase' }}>
-              Love Living Coast2Coast
+          {/* wordmark entrelazado, cortado por el borde inferior del gate */}
+          <div aria-hidden className="st-hero-mark">andrea</div>
+
+          <div style={{ textAlign: 'center', padding: '0 1.5rem', position: 'relative', zIndex: 4 }}>
+            <div className="gate-line" style={{ overflow: 'hidden' }}>
+              <div className="gate-in" style={{ fontFamily: BODY, fontWeight: 500, fontSize: '.72rem', letterSpacing: '.16em', color: '#EFEFEA', textTransform: 'uppercase', animationDelay: '80ms' }}>
+                ● Luxury Real Estate — Love Living Coast2Coast
+              </div>
             </div>
-            <h1 style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2.2rem, 7vw, 5.6rem)', lineHeight: 0.98, letterSpacing: '-0.02em', color: '#FCFAF6', textTransform: 'uppercase', margin: '1.1rem 0 0' }}>
-              The Descent
+            <h1 style={{ margin: '1.2rem 0 0' }}>
+              <span style={{ display: 'block', overflow: 'hidden' }}>
+                <span className="gate-in" style={{ display: 'block', fontFamily: GROTESK, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 8vw, 7.5rem)', lineHeight: 0.95, letterSpacing: '-0.03em', color: '#FCFCFA', animationDelay: '160ms' }}>
+                  The <em style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400 }}>descent</em>
+                </span>
+              </span>
+              <span style={{ display: 'block', overflow: 'hidden' }}>
+                <span className="gate-in" style={{ display: 'block', fontFamily: GROTESK, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 8vw, 7.5rem)', lineHeight: 0.95, letterSpacing: '-0.03em', color: '#FCFCFA', animationDelay: '240ms' }}>
+                  begins here<span style={{ color: LIME }}>.</span>
+                </span>
+              </span>
             </h1>
-            <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(1.05rem, 2.4vw, 1.5rem)', color: '#EADFCB', margin: '0.9rem 0 2.2rem' }}>
-              From the clouds of Miami, down to the one who&apos;ll hand you the keys.
-            </p>
+            <div className="gate-line" style={{ overflow: 'hidden', marginTop: '1rem' }}>
+              <p className="gate-in" style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(1.05rem, 2.4vw, 1.5rem)', color: '#E9E9E2', margin: 0, animationDelay: '320ms' }}>
+                From the clouds of Miami, down to the one who&apos;ll hand you the keys.
+              </p>
+            </div>
             <button
               onClick={begin}
+              className="gate-in"
               style={{
-                fontFamily: FONT, fontWeight: 800, letterSpacing: '.3em', textTransform: 'uppercase', fontSize: '.78rem',
-                color: INK, background: '#FCFAF6', border: `1px solid ${GOLD}`,
+                marginTop: '2.4rem', fontFamily: BODY, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', fontSize: '.78rem',
+                color: '#0d0d0d', background: '#FCFCFA', border: '1px solid rgba(255,255,255,.5)',
                 padding: '1.05rem 2.6rem', cursor: 'pointer', borderRadius: 999,
-                boxShadow: `0 0 0 6px rgba(200,164,93,.16), 0 18px 44px rgba(8,6,4,.45)`,
-                animation: 'descentPulse 2.6s ease-out infinite',
+                boxShadow: '0 18px 44px rgba(6,6,6,.45)', animationDelay: '420ms',
               }}
             >
               Begin the descent ↓
@@ -273,19 +307,57 @@ export default function HeroDescent() {
         </div>
 
         {/* progress hairline */}
-        <div aria-hidden style={{ position: 'absolute', left: 0, top: 0, height: 2, width: `${Math.round(p * 100)}%`, background: `linear-gradient(90deg, ${OXBLOOD}, ${GOLD})`, opacity: started && !ended ? 1 : 0, transition: 'opacity 300ms ease-out' }} />
+        <div aria-hidden style={{ position: 'absolute', left: 0, top: 0, height: 2, width: `${Math.round(p * 100)}%`, background: LIME, opacity: started && !ended ? 1 : 0, transition: 'opacity 300ms ease-out', zIndex: 31 }} />
       </div>
 
       <style>{`
         @media (orientation: portrait) {
           .descent-final-img { object-position: 68% center; }
         }
-        @keyframes descentPulse {
-          0%   { box-shadow: 0 0 0 4px rgba(200,164,93,.22), 0 18px 44px rgba(8,6,4,.45); }
-          50%  { box-shadow: 0 0 0 14px rgba(200,164,93,.05), 0 18px 44px rgba(8,6,4,.45); }
-          100% { box-shadow: 0 0 0 4px rgba(200,164,93,.22), 0 18px 44px rgba(8,6,4,.45); }
-        }
+        .gate-in { animation: gateUp 800ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+        @keyframes gateUp { from { transform: translateY(115%); opacity: 0.4; } to { transform: translateY(0); opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) { .gate-in { animation: none; } }
       `}</style>
+    </div>
+  );
+}
+
+/** Beat hard text: renders <em> children in the serif italic accent (css en studio.css). */
+function BeatText({ children }: { children: React.ReactNode }) {
+  return <span className="beat-hard">{children}</span>;
+}
+
+/** Nav pills flotando sobre el video (activo en blanco sólido). */
+function HeroNav({ visible }: { visible: boolean }) {
+  return (
+    <nav className="st-nav" aria-label="Primary" style={{ opacity: visible ? 1 : 0, transition: 'opacity 400ms ease-out', pointerEvents: visible ? 'auto' : 'none' }}>
+      <div className="grp">
+        <a className="st-pill active" href="#top">Home</a>
+        <a className="st-pill" href="#collection">Collection</a>
+        <a className="st-pill" href="#agent">About</a>
+      </div>
+      <div className="grp secondary">
+        <a className="st-pill" href="https://calendly.com/andrealarsen" target="_blank" rel="noopener noreferrer">Start exploring →</a>
+      </div>
+    </nav>
+  );
+}
+
+/** Hotspots glassmorphism sobre el frame final (la sala con Andrea). */
+function Hotspots({ visible }: { visible: boolean }) {
+  const spots = [
+    { left: '30%', top: '38%', t: 'The living room', d: 'Ivory + marble, floor-to-ceiling ocean light.' },
+    { left: '88%', top: '34%', t: 'Miami skyline', d: 'Penthouse level — the coast at your window.' },
+    { left: '58%', top: '80%', t: 'Your host', d: 'Andrea Larsen · REALTOR® · Top 1% in state.' },
+  ];
+  return (
+    <div aria-hidden={!visible} style={{ position: 'absolute', inset: 0, opacity: visible ? 1 : 0, transition: 'opacity 500ms ease-out 300ms', pointerEvents: visible ? 'auto' : 'none', zIndex: 7 }}>
+      {spots.map((s, i) => (
+        <div key={i} className="st-spot" style={{ left: s.left, top: s.top }}>
+          <button className="dot" aria-label={s.t} />
+          <div className="tip"><b>{s.t}</b><span>{s.d}</span></div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -295,44 +367,26 @@ function FinalCard({ visible }: { visible: boolean }) {
   return (
     <div
       style={{
-        position: 'absolute', left: 'clamp(1.4rem, 6vw, 7rem)', bottom: 'clamp(1.6rem, 7vh, 4.5rem)',
+        position: 'absolute', left: 'clamp(1.4rem, 6vw, 7rem)', bottom: 'clamp(1.6rem, 7vh, 4.5rem)', zIndex: 9,
         opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(18px)',
         transition: 'opacity 500ms ease-out 150ms, transform 500ms ease-out 150ms',
-        pointerEvents: visible ? 'auto' : 'none', maxWidth: 'min(88vw, 640px)',
+        pointerEvents: visible ? 'auto' : 'none', maxWidth: 'min(88vw, 680px)',
       }}
     >
-      <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: '.7rem', letterSpacing: '.42em', color: '#EFE7D8', textTransform: 'uppercase', textShadow: '0 1px 18px rgba(10,8,6,.75)' }}>
-        Love Living Coast2Coast
+      <div style={{ fontFamily: BODY, fontWeight: 500, fontSize: '.7rem', letterSpacing: '.16em', color: '#EFEFEA', textTransform: 'uppercase', textShadow: '0 1px 18px rgba(8,8,8,.75)' }}>
+        ● Love Living Coast2Coast
       </div>
-      <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2.4rem, 6.6vw, 5rem)', lineHeight: 0.96, letterSpacing: '-0.02em', color: '#FCFAF6', textTransform: 'uppercase', margin: '0.7rem 0 0.6rem', textShadow: '0 2px 30px rgba(10,8,6,.55)' }}>
-        Andrea Larsen
+      <div style={{ fontFamily: GROTESK, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7vw, 5.6rem)', lineHeight: 0.95, letterSpacing: '-0.03em', color: '#FCFCFA', margin: '0.6rem 0 0.5rem', textShadow: '0 2px 30px rgba(8,8,8,.55)' }}>
+        Andrea <em style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400 }}>Larsen</em>
       </div>
-      <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(1.05rem, 2.2vw, 1.4rem)', color: '#F0E7D6', textShadow: '0 1px 20px rgba(10,8,6,.65)' }}>
+      <div style={{ fontFamily: BODY, fontSize: 'clamp(.85rem, 1.6vw, 1rem)', color: '#EDEDE8', textShadow: '0 1px 20px rgba(8,8,8,.65)' }}>
         REALTOR® · Luxury Property Specialist · 27+ years · Top 1% in state
       </div>
-      <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap', marginTop: '1.6rem' }}>
-        <a
-          href="https://calendly.com/andrealarsen"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontFamily: FONT, fontWeight: 800, letterSpacing: '.24em', textTransform: 'uppercase', fontSize: '.74rem',
-            color: '#FCFAF6', background: OXBLOOD, padding: '1rem 1.9rem', borderRadius: 999,
-            textDecoration: 'none', border: '1px solid rgba(200,164,93,.55)', boxShadow: '0 14px 36px rgba(8,6,4,.4)',
-          }}
-        >
+      <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
+        <a className="st-pill" style={{ background: '#FCFCFA', color: '#0d0d0d', borderColor: '#FCFCFA', fontWeight: 600 }} href="https://calendly.com/andrealarsen" target="_blank" rel="noopener noreferrer">
           Schedule a private viewing
         </a>
-        <a
-          href="#collection"
-          style={{
-            fontFamily: FONT, fontWeight: 800, letterSpacing: '.24em', textTransform: 'uppercase', fontSize: '.74rem',
-            color: '#FCFAF6', padding: '1rem 1.6rem', borderRadius: 999, textDecoration: 'none',
-            border: '1px solid rgba(252,250,246,.45)',
-          }}
-        >
-          The collection ↓
-        </a>
+        <a className="st-pill" href="#featured">The collection ↓</a>
       </div>
     </div>
   );

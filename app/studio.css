@@ -1,0 +1,206 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   STUDIO — design system del rediseño premium (referencias: Suffo + editorial
+   claro + Nestoria). Tokens, tipografía y componentes compartidos.
+   Paleta: off-white #F4F4F2 · dark #0D0D0D · lima #C8F31D (solo sobre oscuro).
+   ──────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --st-bg: #f4f4f2;
+  --st-dark: #0d0d0d;
+  --st-card: #141414;
+  --st-lime: #c8f31d;
+  --st-ink: #1a1a1a;
+  --st-grey: #8a8a8a;
+  --st-grey-dark: #a0a0a0;
+  --st-line: #e5e5e1;
+  --st-line-dark: rgba(244, 244, 242, 0.14);
+  --st-mist: #aeb9be;
+  --grotesk: var(--font-grotesk), 'Archivo', system-ui, sans-serif;
+  --serif: var(--font-serif), 'Instrument Serif', Georgia, serif;
+  --body: var(--font-body), 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-o: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── typography ─────────────────────────────────────────────────────────── */
+.st { font-family: var(--body); color: var(--st-ink); background: var(--st-bg); }
+.st ::selection { background: var(--st-lime); color: var(--st-dark); }
+
+.st-h1, .st-h2, .st-h3, .st-num {
+  font-family: var(--grotesk);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-stretch: 115%;
+}
+.st-h1 { font-size: clamp(3.5rem, 9vw, 8.5rem); }
+.st-h2 { font-size: clamp(2.6rem, 6.4vw, 6rem); }
+.st-h3 { font-size: clamp(1.6rem, 3vw, 2.6rem); }
+.st-num { font-variant-numeric: tabular-nums; }
+.st-it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+.st-dash { color: var(--st-lime); }
+.st-dark-s .st-dash { color: var(--st-lime); }
+.st-light-s .st-dash { color: #9dbf0e; } /* lima legible sobre claro (AA) */
+
+.st-eyebrow {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--st-grey);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
+.st-eyebrow::before { content: '●'; font-size: 0.5em; color: currentColor; }
+
+.st-body { font-size: 1.05rem; line-height: 1.6; color: #555; max-width: 46ch; }
+.st-dark-s .st-body { color: var(--st-grey-dark); }
+
+/* ── surfaces ───────────────────────────────────────────────────────────── */
+.st-light-s { background: var(--st-bg); color: var(--st-ink); }
+.st-dark-s { background: var(--st-dark); color: #f4f4f2; }
+.st-mist-s { background: var(--st-mist); color: #23292c; }
+.st-section { padding: clamp(5rem, 11vh, 9rem) clamp(1.25rem, 5vw, 6.5rem); }
+.st-wrap { max-width: 1420px; margin: 0 auto; }
+
+/* ── pills ──────────────────────────────────────────────────────────────── */
+.st-pill {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--body); font-size: 0.82rem; font-weight: 500;
+  padding: 0.72em 1.5em; border-radius: 999px; text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.35); color: #fff;
+  background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 250ms var(--ease), color 250ms var(--ease), border-color 250ms var(--ease);
+  cursor: pointer; white-space: nowrap;
+}
+.st-pill:hover, .st-pill.active { background: #fff; color: var(--st-dark); border-color: #fff; }
+.st-pill--dark { border-color: var(--st-ink); color: var(--st-ink); background: transparent; backdrop-filter: none; }
+.st-pill--dark:hover { background: var(--st-ink); color: #fff; border-color: var(--st-ink); }
+.st-pill--solid { background: var(--st-ink); color: #fff; border-color: var(--st-ink); backdrop-filter: none; }
+.st-pill--solid:hover { background: #000; }
+
+/* ── mask reveal (titulares) ────────────────────────────────────────────── */
+.st-line { display: block; overflow: hidden; }
+.st-line > span {
+  display: block; transform: translateY(112%);
+  transition: transform 760ms var(--ease-o);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.st-reveal.in .st-line > span { transform: translateY(0); }
+.st-fade { opacity: 0; transform: translateY(22px); transition: opacity 600ms var(--ease-o), transform 700ms var(--ease-o); transition-delay: calc(var(--i, 0) * 80ms); }
+.st-reveal.in .st-fade, .st-fade.in { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .st-line > span { transform: none !important; transition: none !important; }
+  .st-fade { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ── tech sheet (ficha en columnas) ─────────────────────────────────────── */
+.st-sheet { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem 2.5rem; border-top: 1px solid var(--st-line); padding-top: 1.6rem; }
+.st-dark-s .st-sheet { border-color: var(--st-line-dark); }
+.st-sheet dt { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--st-grey); margin-bottom: 0.5rem; }
+.st-sheet dd { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -0.02em; margin: 0; }
+
+/* ── listing cards (grid claro) ─────────────────────────────────────────── */
+.st-card-l { display: block; text-decoration: none; color: inherit; }
+.st-card-l .ph { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; background: #e2e2de; }
+.st-card-l .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-o); display: block; }
+.st-card-l:hover .ph img { transform: scale(1.05); }
+.st-card-l .badge { position: absolute; top: 14px; left: 14px; background: #fff; color: var(--st-ink); font-size: 0.72rem; font-weight: 500; padding: 0.45em 1em; border-radius: 999px; }
+.st-card-l .arrow { position: absolute; right: 14px; bottom: 14px; width: 42px; height: 42px; border-radius: 999px; background: #fff; display: grid; place-items: center; opacity: 0; transform: translateY(8px); transition: opacity 300ms var(--ease), transform 300ms var(--ease); font-size: 1rem; }
+.st-card-l:hover .arrow { opacity: 1; transform: translateY(0); }
+.st-card-l .meta { display: flex; gap: 0.9em; align-items: center; color: var(--st-grey); font-size: 0.82rem; margin: 1rem 0 0.35rem; }
+.st-card-l .name { font-family: var(--grotesk); font-weight: 500; font-size: 1.35rem; letter-spacing: -0.02em; }
+.st-card-l .price-row { display: flex; gap: 0.7em; align-items: baseline; margin-top: 0.3rem; flex-wrap: wrap; }
+.st-card-l .price { font-weight: 700; font-family: var(--body); font-variant-numeric: tabular-nums; }
+.st-card-l .addr { color: var(--st-grey); font-size: 0.9rem; }
+
+/* ── collections (índice negro) ─────────────────────────────────────────── */
+.st-row {
+  display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 1.5rem; align-items: baseline;
+  padding: 1.5rem 1rem; border-top: 1px solid var(--st-line-dark);
+  text-decoration: none; color: #f4f4f2; position: relative;
+  transition: background 300ms var(--ease), color 300ms var(--ease), padding-left 300ms var(--ease);
+}
+.st-row:last-child { border-bottom: 1px solid var(--st-line-dark); }
+.st-row .r-name { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.2rem, 2.4vw, 2rem); letter-spacing: -0.02em; }
+.st-row .r-loc { color: var(--st-grey-dark); font-size: 0.9rem; }
+.st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--st-lime); }
+.st-row:hover { background: #3a4222; padding-left: 1.6rem; }
+.st-polaroid {
+  position: fixed; pointer-events: none; z-index: 60; width: 300px; aspect-ratio: 4/3;
+  border-radius: 12px; overflow: hidden; transform: rotate(-8deg) scale(0.94);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.65); border: 6px solid #fff;
+  opacity: 0; transition: opacity 220ms var(--ease), transform 320ms var(--ease-o);
+}
+.st-polaroid.on { opacity: 1; transform: rotate(-8deg) scale(1); }
+.st-polaroid img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── stats ──────────────────────────────────────────────────────────────── */
+.st-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.st-stat { padding: 0 2rem; border-left: 1px solid var(--st-line); }
+.st-stat:first-child { border-left: 0; padding-left: 0; }
+.st-stat .v { font-family: var(--grotesk); font-weight: 400; font-size: clamp(3rem, 5.5vw, 4.5rem); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.st-stat .l { color: var(--st-grey); font-size: 0.9rem; margin-top: 0.4rem; }
+
+/* ── hotspots glass ─────────────────────────────────────────────────────── */
+.st-spot { position: absolute; z-index: 6; }
+.st-spot .dot {
+  width: 18px; height: 18px; border-radius: 999px; background: rgba(255, 255, 255, 0.95);
+  border: none; cursor: pointer; position: relative; display: block;
+}
+.st-spot .dot::after { content: ''; position: absolute; inset: -7px; border-radius: 999px; border: 1.5px solid rgba(255, 255, 255, 0.8); animation: stPulse 2.4s ease-out infinite; }
+.st-spot .tip {
+  position: absolute; left: 26px; top: -8px; min-width: 190px;
+  background: rgba(20, 20, 20, 0.42); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 14px; padding: 0.85rem 1rem;
+  color: #fff; opacity: 0; transform: scale(0.94) translateY(4px); transform-origin: left top;
+  transition: opacity 250ms var(--ease), transform 250ms var(--ease); pointer-events: none;
+}
+.st-spot:hover .tip, .st-spot:focus-within .tip { opacity: 1; transform: scale(1) translateY(0); }
+.st-spot .tip b { display: block; font-family: var(--grotesk); font-weight: 500; font-size: 0.95rem; margin-bottom: 0.2rem; }
+.st-spot .tip span { font-size: 0.76rem; color: rgba(255, 255, 255, 0.78); line-height: 1.45; }
+@keyframes stPulse { 0% { transform: scale(0.7); opacity: 1; } 70% { transform: scale(1.5); opacity: 0; } 100% { opacity: 0; } }
+
+/* ── faq ────────────────────────────────────────────────────────────────── */
+.st-faq { border-top: 1px solid var(--st-line); }
+.st-faq-i { border-bottom: 1px solid var(--st-line); }
+.st-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: 0; text-align: left; cursor: pointer; padding: 1.6rem 0.2rem; }
+.st-faq-q h3 { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: -0.02em; margin: 0; }
+.st-faq-q .x { font-size: 1.5rem; font-weight: 300; line-height: 1; transition: transform 300ms var(--ease); }
+.st-faq-i.open .x { transform: rotate(45deg); }
+.st-faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 380ms var(--ease); }
+.st-faq-i.open .st-faq-a { grid-template-rows: 1fr; }
+.st-faq-a > div { overflow: hidden; }
+.st-faq-a p { margin: 0 0 1.5rem; color: #555; max-width: 60ch; line-height: 1.6; }
+
+/* ── footer wordmark ────────────────────────────────────────────────────── */
+.st-wordmark {
+  font-family: var(--grotesk); font-weight: 500; font-stretch: 115%;
+  font-size: clamp(6rem, 21vw, 21rem); line-height: 0.72; letter-spacing: -0.04em;
+  color: var(--st-lime); text-transform: lowercase; user-select: none;
+  display: block; transform: translateY(0.16em);
+}
+
+/* ── nav pills del hero ─────────────────────────────────────────────────── */
+.st-nav { position: absolute; top: 1.4rem; left: 0; right: 0; z-index: 30; display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(1.25rem, 4vw, 4rem); gap: 1rem; }
+.st-nav .grp { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+@media (max-width: 760px) { .st-nav .grp.secondary { display: none; } }
+
+/* flancos editoriales */
+.st-flank { position: absolute; z-index: 20; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255, 255, 255, 0.85); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4); }
+@media (max-width: 760px) { .st-flank { display: none; } }
+
+/* acento serif dentro de los beats del descenso */
+.beat-hard em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+/* marquee-safe wordmark del hero (detrás del video-overlay) */
+.st-hero-mark {
+  position: absolute; inset: auto 0 4vh 0; z-index: 3; text-align: center;
+  font-family: var(--grotesk); font-weight: 500; font-stretch: 115%;
+  font-size: clamp(5rem, 17vw, 17rem); line-height: 0.8; letter-spacing: -0.045em;
+  color: rgba(255, 255, 255, 0.92); pointer-events: none; mix-blend-mode: overlay;
+}

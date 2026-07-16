@@ -12,11 +12,11 @@ import { useEffect, useRef, useState } from 'react';
 import Magnetic from './magnetic';
 
 const INK = '#1A1714';
-const OXBLOOD = '#7A1F1B';
-const GOLD = '#C8A45D';
+const OXBLOOD = '#0d0d0d';
+const GOLD = '#C8F31D';
 const PAPER = '#FAF9F7';
-const FONT = "'Archivo', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif";
-const SERIF = "'Cormorant Garamond', Georgia, serif";
+const FONT = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
+const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";
 
 const DETAIL = 'https://andrealarsen.foxroach.com/realestate/details/12814728/465-pineville-road-newtown-pa-18940';
 
@@ -83,19 +83,19 @@ export default function Flagship() {
           aria-hidden={split > 0.6}
           style={{
             position: 'absolute', top: 'clamp(4rem, 9vh, 6rem)', left: 0, right: 0, textAlign: 'center',
-            fontFamily: FONT, fontWeight: 800, fontSize: '.72rem', letterSpacing: '.42em', textTransform: 'uppercase',
+            fontFamily: FONT, fontWeight: 600, fontSize: '.72rem', letterSpacing: '.14em', textTransform: 'uppercase',
             color: OXBLOOD, opacity: 1 - split, pointerEvents: 'none',
           }}
         >
-          The flagship residence · Coming soon
+          ● The flagship residence · Coming soon
         </div>
 
         {/* display type that splits as the image devours the stage */}
         <div aria-hidden={split > 0.85} style={{ position: 'relative', zIndex: 2, textAlign: 'center', pointerEvents: 'none' }}>
-          <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${-split * 34}vw)`, opacity: 1 - split * 0.92 }}>
+          <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${-split * 34}vw)`, opacity: 1 - split * 0.92 }}>
             Pineville
           </div>
-          <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${split * 34}vw)`, opacity: 1 - split * 0.92 }}>
+          <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7.6vw, 6.8rem)', lineHeight: 0.94, letterSpacing: '-0.015em', textTransform: 'uppercase', color: '#FCFAF6', textShadow: '0 2px 28px rgba(10,8,6,.45)', transform: `translateX(${split * 34}vw)`, opacity: 1 - split * 0.92 }}>
             Estate
           </div>
         </div>
@@ -108,14 +108,14 @@ export default function Flagship() {
             pointerEvents: info > 0.6 ? 'auto' : 'none',
           }}
         >
-          <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: '.7rem', letterSpacing: '.4em', textTransform: 'uppercase', color: GOLD }}>
+          <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: '#C8F31D' }}>
             465 Pineville Road · Newtown, PA · Bucks County
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '1rem 2.4rem', marginTop: '.8rem' }}>
-            <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 'clamp(2.6rem, 7vw, 6rem)', lineHeight: 0.95, letterSpacing: '-0.02em', color: '#FCFAF6', textShadow: '0 2px 34px rgba(10,8,6,.5)' }}>
+            <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7vw, 6rem)', lineHeight: 0.95, letterSpacing: '-0.02em', color: '#FCFAF6', textShadow: '0 2px 34px rgba(10,8,6,.5)' }}>
               $18,800,000
             </div>
-            <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)', color: '#F0E7D6', textShadow: '0 1px 20px rgba(10,8,6,.6)' }}>
+            <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)', color: '#F0E7D6', textShadow: '0 1px 20px rgba(10,8,6,.6)' }}>
               4 beds · 6 baths · 8,050 sq ft · 147.73 acres
             </div>
           </div>
@@ -126,9 +126,9 @@ export default function Flagship() {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  display: 'inline-block', fontFamily: FONT, fontWeight: 800, letterSpacing: '.24em', textTransform: 'uppercase', fontSize: '.74rem',
+                  display: 'inline-block', fontFamily: FONT, fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase', fontSize: '.74rem',
                   color: INK, background: '#FCFAF6', padding: '1.05rem 2.1rem', borderRadius: 999, textDecoration: 'none',
-                  border: `1px solid ${GOLD}`, boxShadow: '0 16px 40px rgba(8,6,4,.42)',
+                  border: '1px solid rgba(255,255,255,.5)', boxShadow: '0 16px 40px rgba(8,6,4,.42)',
                 }}
               >
                 View the estate ↗

@@ -1,37 +1,65 @@
 import HeroDescent from '@/components/descent/hero-descent';
 import Flagship from '@/components/descent/flagship';
-import Finale from '@/components/descent/finale';
-import { HeroParallax } from '@/components/hero-parallax';
-import { ListingGrid } from '@/components/listing-grid';
-import { AgentSection } from '@/components/agent-section';
-import { listings } from '@/components/listings-data';
+import ValueProps from '@/components/studio/value-props';
+import Featured from '@/components/studio/featured';
+import Manifesto from '@/components/studio/manifesto';
+import Stats from '@/components/studio/stats';
+import Collections from '@/components/studio/collections';
+import Mist from '@/components/studio/mist';
+import MapSection from '@/components/studio/map-section';
+import AgentEditorial from '@/components/studio/agent-editorial';
+import Quotes from '@/components/studio/quotes';
+import Faq from '@/components/studio/faq';
+import FooterStudio from '@/components/studio/footer-studio';
 
 /*
- * NOTA: ParallaxHero (FIND-style) y ScrollExpandRealEstate siguen en el repo,
- * intactos, pero fuera del flujo: el hero ahora es HeroDescent (el descenso
- * de drone scrubbeado por scroll que aterriza en Andrea).
+ * Rediseño premium (referencias: Suffo + editorial claro + Nestoria).
+ * El hero scroll-scrub queda intacto en su lógica; el resto de secciones son
+ * el nuevo sistema "studio". Componentes previos (parallax-hero, hero-parallax,
+ * listing-grid, agent-section, finale) permanecen en el repo, fuera de flujo.
  */
 
 export default function Home() {
   return (
-    <>
-      {/* 1 · EL DESCENSO — drone scrub: nubes → Miami → familia → Andrea */}
+    <main className="st" id="top">
+      {/* 1 · EL DESCENSO — intocable en su mecánica, overlay v2 */}
       <HeroDescent />
 
-      {/* 2 · FLAGSHIP — Pineville $18.8M, expansión de imagen + tipografía */}
+      {/* 2 · Value props */}
+      <ValueProps />
+
+      {/* 3 · Featured listings (grid editorial claro) */}
+      <Featured />
+
+      {/* 4 · Manifesto tipográfico + ficha técnica */}
+      <Manifesto />
+
+      {/* 5 · Stats con count-up */}
+      <Stats />
+
+      {/* 6 · Flagship $18.8M — expansión de imagen */}
       <Flagship />
 
-      {/* 3 · La colección — parallax 3D + grid en formación */}
-      <div id="collection">
-        <HeroParallax products={listings} />
-        <ListingGrid listings={listings} />
-      </div>
+      {/* 7 · Collections — índice negro con polaroid hover */}
+      <Collections />
 
-      {/* 4 · Andrea */}
-      <AgentSection />
+      {/* 8 · Respiro gris-azulado + búsqueda */}
+      <Mist />
 
-      {/* 5 · Cierre — CTA magnético */}
-      <Finale />
-    </>
+      {/* 9 · Mapa estilizado */}
+      <MapSection />
+
+      {/* 10 · La agente */}
+      <AgentEditorial />
+
+      {/* 11 · El estándar Larsen (quotes drag) */}
+      <Quotes />
+
+      {/* 12 · FAQ */}
+      <Faq />
+
+      {/* 13 · CTA final + footer con wordmark lima */}
+      <FooterStudio />
+    </main>
   );
 }
