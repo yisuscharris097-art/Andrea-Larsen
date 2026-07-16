@@ -1,11 +1,12 @@
 'use client';
 
 /**
- * Quotes — carrusel horizontal drag con los principios reales de Andrea
- * (tomados de su bio — no testimonios inventados).
+ * Quotes — carrusel horizontal con los principios reales de Andrea
+ * (de su bio — no testimonios inventados). Drag físico + AUTOPLAY que se
+ * pausa al interactuar + flechas prev/next. Respeta prefers-reduced-motion.
  */
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Reveal, Line } from './ui';
 
 const QUOTES = [
@@ -19,10 +20,39 @@ const QUOTES = [
 export default function Quotes() {
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, x: 0, left: 0 });
+  const paused = useRef(false);
+
+  const step = () => {
+    const el = track.current;
+    if (!el) return 0;
+    const card = el.firstElementChild as HTMLElement | null;
+    return card ? card.offsetWidth + 22 : 480;
+  };
+
+  const go = (dir: number) => {
+    const el = track.current;
+    if (!el) return;
+    const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 20;
+    const atStart = el.scrollLeft <= 10;
+    if (dir > 0 && atEnd) el.scrollTo({ left: 0, behavior: 'smooth' });
+    else if (dir < 0 && atStart) el.scrollTo({ left: el.scrollWidth, behavior: 'smooth' });
+    else el.scrollBy({ left: dir * step(), behavior: 'smooth' });
+  };
+
+  // autoplay — pausa al hover/drag/pestaña oculta
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => {
+      if (!paused.current && !document.hidden) go(1);
+    }, 3600);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onDown = (e: React.PointerEvent) => {
     const el = track.current!;
     drag.current = { down: true, x: e.clientX, left: el.scrollLeft };
+    paused.current = true;
     el.setPointerCapture(e.pointerId);
   };
   const onMove = (e: React.PointerEvent) => {
@@ -35,11 +65,27 @@ export default function Quotes() {
     <section className="st st-mist-s st-section" style={{ overflow: 'hidden' }}>
       <div className="st-wrap">
         <Reveal>
-          <span className="st-eyebrow" style={{ color: '#4a5457' }}>The Larsen standard</span>
-          <h2 className="st-h2" style={{ margin: '1rem 0 3rem' }}>
-            <Line i={0}>What working with</Line>
-            <Line i={1}>Andrea <span className="st-it">feels</span> like<span className="st-dash">–</span></Line>
-          </h2>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+            <div>
+              <span className="st-eyebrow" style={{ color: '#4a5457' }}>The Larsen standard</span>
+              <h2 className="st-h2" style={{ margin: '1rem 0 0' }}>
+                <Line i={0}>What working with</Line>
+                <Line i={1}>Andrea <span className="st-it">feels</span> like<span className="st-dash">–</span></Line>
+              </h2>
+            </div>
+            <div style={{ display: 'flex', gap: '0.6rem' }}>
+              <button onClick={() => { paused.current = true; go(-1); }} aria-label="Previous"
+                style={{ width: 52, height: 52, borderRadius: 999, border: '1px solid rgba(35,41,44,0.4)', background: 'transparent', color: '#23292c', fontSize: '1.1rem', cursor: 'pointer', transition: 'background 250ms var(--ease), color 250ms var(--ease)' }}
+                onMouseOver={(e) => { e.currentTarget.style.background = '#23292c'; e.currentTarget.style.color = '#fff'; }}
+                onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#23292c'; }}>
+                ←
+              </button>
+              <button onClick={() => { paused.current = true; go(1); }} aria-label="Next"
+                style={{ width: 52, height: 52, borderRadius: 999, border: 0, background: '#0d0d0d', color: '#fff', fontSize: '1.1rem', cursor: 'pointer' }}>
+                →
+              </button>
+            </div>
+          </div>
         </Reveal>
       </div>
       <div
@@ -47,7 +93,8 @@ export default function Quotes() {
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={onUp}
-        onPointerLeave={onUp}
+        onPointerLeave={(e) => { onUp(); paused.current = false; }}
+        onPointerEnter={() => { paused.current = true; }}
         style={{ display: 'flex', gap: '1.4rem', overflowX: 'auto', padding: '0 clamp(1.25rem, 5vw, 6.5rem) 0.5rem', cursor: 'grab', scrollbarWidth: 'none', userSelect: 'none' }}
       >
         {QUOTES.map((c, i) => (
