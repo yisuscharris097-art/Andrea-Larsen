@@ -1,4 +1,6 @@
 import HeroDescent from '@/components/descent/hero-descent';
+import Flagship from '@/components/descent/flagship';
+import Finale from '@/components/descent/finale';
 import { HeroParallax } from '@/components/hero-parallax';
 import { ListingGrid } from '@/components/listing-grid';
 import { AgentSection } from '@/components/agent-section';
@@ -16,14 +18,20 @@ export default function Home() {
       {/* 1 · EL DESCENSO — drone scrub: nubes → Miami → familia → Andrea */}
       <HeroDescent />
 
-      {/* 2 · La colección — parallax 3D + grid seleccionable */}
+      {/* 2 · FLAGSHIP — Pineville $18.8M, expansión de imagen + tipografía */}
+      <Flagship />
+
+      {/* 3 · La colección — parallax 3D + grid en formación */}
       <div id="collection">
         <HeroParallax products={listings} />
         <ListingGrid listings={listings} />
       </div>
 
-      {/* 3 · Andrea */}
+      {/* 4 · Andrea */}
       <AgentSection />
+
+      {/* 5 · Cierre — CTA magnético */}
+      <Finale />
     </>
   );
 }

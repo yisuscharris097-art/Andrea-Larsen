@@ -1,13 +1,45 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import type { Listing } from './listings-data';
 
 /**
  * ListingGrid — TODAS las propiedades visibles y seleccionables (clicables).
  * Cada tarjeta abre el detalle del listing. Blanco + oxblood, sans pesada.
+ * Entrada en "formación" (OnScrollLayoutFormations, Awwwards Pack / Grid 7):
+ * las tarjetas suben con rotación sutil en stagger desde el centro.
  */
 export const ListingGrid = ({ listings }: { listings: Listing[] }) => {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const items = Array.from(grid.children) as HTMLElement[];
+    const mid = (items.length - 1) / 2;
+    items.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = `translateY(84px) rotate(${((i % 3) - 1) * 1.4}deg)`;
+      el.style.transition = 'none';
+    });
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        const el = e.target as HTMLElement;
+        const i = items.indexOf(el);
+        const delay = Math.abs(i - mid) * 80;
+        el.style.transition = `opacity 600ms ease-out ${delay}ms, transform 700ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0) rotate(0deg)';
+      }),
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [listings]);
+
   return (
     <section className="bg-paper px-4 md:px-8 py-20 md:py-32">
       <div className="max-w-7xl mx-auto">
@@ -25,7 +57,7 @@ export const ListingGrid = ({ listings }: { listings: Listing[] }) => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 md:gap-x-10 md:gap-y-16">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 md:gap-x-10 md:gap-y-16">
           {listings.map((l, i) => (
             <Link
               key={i}
