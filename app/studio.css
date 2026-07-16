@@ -194,6 +194,17 @@
 .st-flank { position: absolute; z-index: 20; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255, 255, 255, 0.85); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4); }
 @media (max-width: 760px) { .st-flank { display: none; } }
 
+/* ── skeleton shimmer (estados de carga, nunca spinners) ────────────────── */
+.st-skel { position: relative; }
+.st-skel::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(100deg, #e8e8e4 30%, #f2f2ee 46%, #e8e8e4 60%);
+  background-size: 220% 100%; animation: stShimmer 1.6s ease-in-out infinite;
+}
+.st-skel > * { position: relative; z-index: 1; }
+@keyframes stShimmer { from { background-position: 130% 0; } to { background-position: -80% 0; } }
+@media (prefers-reduced-motion: reduce) { .st-skel::before { animation: none; } }
+
 /* acento serif dentro de los beats del descenso */
 .beat-hard em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
 

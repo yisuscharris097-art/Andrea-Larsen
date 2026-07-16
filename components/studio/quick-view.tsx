@@ -14,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { agent } from '@/components/agent-data';
 import type { Property } from '@/lib/properties';
+import { Lightbox } from './lightbox';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -42,6 +43,9 @@ export function QuickView({ property, onClose }: { property: Property | null; on
   const panelRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [more, setMore] = useState(false);
+  const [lb, setLb] = useState<number | null>(null);
+
+  useEffect(() => { setLb(null); setMore(false); }, [property?.slug]);
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 760px)');
@@ -106,15 +110,32 @@ export function QuickView({ property, onClose }: { property: Property | null; on
             </button>
 
             {/* foto principal — llega volando desde la card (shared element) */}
-            <motion.div layoutId={`ph-${property.slug}`} transition={{ duration: 0.5, ease: EASE }} style={{ position: 'relative', aspectRatio: '16/10', margin: 'clamp(0.8rem, 2vw, 1.4rem)', borderRadius: 18, overflow: 'hidden', background: '#e2e2de' }}>
+            <motion.div layoutId={`ph-${property.slug}`} transition={{ duration: 0.5, ease: EASE }} className="st-skel" style={{ position: 'relative', aspectRatio: '16/10', margin: 'clamp(0.8rem, 2vw, 1.4rem)', borderRadius: 18, overflow: 'hidden', background: '#e2e2de', cursor: 'zoom-in' }} onClick={() => setLb(0)}>
               <Image src={property.photo} alt={property.address} fill sizes="(max-width: 760px) 100vw, 66vw" style={{ objectFit: 'cover' }} priority />
               <span style={{ position: 'absolute', top: 14, left: 14, background: '#fff', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.74rem', fontWeight: 500 }}>{property.status}</span>
-              {property.photos.length === 1 && (
-                <span style={{ position: 'absolute', bottom: 14, right: 14, background: 'rgba(13,13,13,0.6)', color: '#fff', backdropFilter: 'blur(8px)', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.72rem' }}>
-                  Full gallery on request
-                </span>
-              )}
+              <span style={{ position: 'absolute', bottom: 14, right: 14, background: 'rgba(13,13,13,0.6)', color: '#fff', backdropFilter: 'blur(8px)', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.72rem' }}>
+                {property.photos.length > 1 ? `View all ${property.photos.length} photos` : 'Full gallery on request'}
+              </span>
             </motion.div>
+
+            {/* thumbnails + badge +N */}
+            {property.photos.length > 1 && (
+              <div style={{ display: 'flex', gap: 8, padding: '0 clamp(0.8rem, 2vw, 1.4rem)', marginTop: -4 }}>
+                {property.photos.slice(1, 5).map((p, k) => (
+                  <button key={p} onClick={() => setLb(k + 1)} aria-label={`Open photo ${k + 2}`}
+                    className="st-skel" style={{ flex: 1, aspectRatio: '4/3', maxWidth: '23%', borderRadius: 10, overflow: 'hidden', border: 0, padding: 0, cursor: 'pointer', background: '#e2e2de' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  </button>
+                ))}
+                {property.photos.length > 5 && (
+                  <button onClick={() => setLb(5)} aria-label={`View all ${property.photos.length} photos`}
+                    style={{ flex: 1, aspectRatio: '4/3', maxWidth: '23%', borderRadius: 10, border: '1px solid var(--st-line)', background: '#fff', cursor: 'pointer', fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '1.05rem' }}>
+                    +{property.photos.length - 5}
+                  </button>
+                )}
+              </div>
+            )}
 
             <div style={{ padding: '0 clamp(1rem, 3vw, 2.2rem) 2.2rem' }}>
               {/* header: dirección + precio */}
@@ -172,6 +193,8 @@ export function QuickView({ property, onClose }: { property: Property | null; on
                 View full details →
               </Link>
             </div>
+
+            <Lightbox photos={property.photos} alt={`${property.address}, ${property.city}`} index={lb} onClose={() => setLb(null)} onIndex={setLb} />
           </motion.div>
         </motion.div>
       )}

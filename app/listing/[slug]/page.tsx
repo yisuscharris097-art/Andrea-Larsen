@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { properties, bySlug, related, AREA } from '@/lib/properties';
 import { agent } from '@/components/agent-data';
+import ListingGallery from '@/components/studio/listing-gallery';
 import '../../studio.css';
 
 export function generateStaticParams() {
@@ -49,6 +50,13 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
         </div>
       </nav>
 
+      {/* breadcrumb */}
+      <div style={{ padding: '0 clamp(1.25rem, 5vw, 6.5rem)', fontSize: '0.78rem', color: 'var(--st-grey)' }}>
+        <Link href="/properties" style={{ color: 'inherit', textDecoration: 'none' }}>Properties for sale in {p.city}</Link>
+        <span aria-hidden> › </span>
+        <span style={{ color: 'var(--st-ink)' }}>{p.address}</span>
+      </div>
+
       {/* header Monte: titular / foto / precio+specs */}
       <header className="st-section lst-head" style={{ paddingTop: '2rem', display: 'grid', gridTemplateColumns: 'minmax(220px, 1fr) minmax(0, 1.6fr) minmax(220px, 0.9fr)', gap: '2.5rem', alignItems: 'center' }}>
         <div>
@@ -64,7 +72,8 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
           </a>
         </div>
         <div>
-          <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontVariantNumeric: 'tabular-nums', fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', letterSpacing: '-0.02em' }}>{p.priceDisplay}</div>
+          <span className="st-eyebrow">Asking price</span>
+          <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontVariantNumeric: 'tabular-nums', fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', letterSpacing: '-0.02em', marginTop: '0.4rem' }}>{p.priceDisplay}</div>
           <div style={{ color: 'var(--st-grey)', margin: '0.4rem 0 1.2rem' }}>{p.address}, {p.city}, {p.state} {p.zip}</div>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {p.features.map((f) => (
@@ -97,19 +106,8 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
             <div><dt>Status</dt><dd style={{ fontSize: '1.1rem' }}>{p.status}</dd></div>
           </dl>
 
-          {/* galería */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '3.4rem 0 1.2rem' }}>
-            <span className="st-eyebrow">Exterior &amp; interior</span>
-            <a className="st-pill st-pill--solid" href={agent.contact.calendly} target="_blank" rel="noopener noreferrer">Request tour</a>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem' }}>
-            <div style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', aspectRatio: '16/10' }}>
-              <Image src={p.photo} alt={`${p.address} — main view`} fill sizes="60vw" style={{ objectFit: 'cover' }} />
-            </div>
-            <div style={{ border: '1px dashed var(--st-line)', borderRadius: 18, display: 'grid', placeItems: 'center', color: 'var(--st-grey)', fontSize: '0.85rem', textAlign: 'center', padding: '1rem' }}>
-              ◌ Full gallery on request<br />via {agent.office.name.split(',')[0]}
-            </div>
-          </div>
+          {/* galería completa (masonry + lightbox) */}
+          <ListingGallery photos={p.photos} alt={`${p.address}, ${p.city} ${p.state}`} tourHref={agent.contact.calendly} />
 
           {/* entorno */}
           <span className="st-eyebrow" style={{ display: 'inline-flex', marginTop: '3.4rem' }}>The area — Ocean City</span>
