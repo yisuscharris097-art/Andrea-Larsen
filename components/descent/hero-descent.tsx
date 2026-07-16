@@ -336,6 +336,7 @@ function HeroNav({ visible }: { visible: boolean }) {
         <a className="st-pill" href="/properties">Properties</a>
         <a className="st-pill" href="#collection">Collection</a>
         <a className="st-pill" href="#agent">About</a>
+        <a className="st-pill" href="#contact">Contact</a>
       </div>
       <div className="grp secondary">
         <a className="st-pill" href="https://calendly.com/andrealarsen" target="_blank" rel="noopener noreferrer">Start exploring →</a>

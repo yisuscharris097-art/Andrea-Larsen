@@ -10,6 +10,7 @@ import MapSection from '@/components/studio/map-section';
 import AgentEditorial from '@/components/studio/agent-editorial';
 import Quotes from '@/components/studio/quotes';
 import Faq from '@/components/studio/faq';
+import ContactForm from '@/components/studio/contact-form';
 import FooterStudio from '@/components/studio/footer-studio';
 
 /*
@@ -58,7 +59,10 @@ export default function Home() {
       {/* 12 · FAQ */}
       <Faq />
 
-      {/* 13 · CTA final + footer con wordmark lima */}
+      {/* 13 · Contacto */}
+      <ContactForm />
+
+      {/* 14 · CTA final + footer con wordmark */}
       <FooterStudio />
     </main>
   );

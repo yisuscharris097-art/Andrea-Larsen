@@ -62,7 +62,7 @@ const Bath = () => (
 
 export default function Featured() {
   const qv = useQuickView();
-  const six = properties.slice(0, 6);
+  const six = properties.slice(0, 12);
 
   // deep-link al montar
   useEffect(() => {
