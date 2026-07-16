@@ -30,10 +30,10 @@ export default function Collections() {
   };
 
   return (
-    <section className="st st-dark-s st-section" id="collection" onMouseMove={onMove}>
+    <section className="st st-light-s st-section" id="collection" onMouseMove={onMove}>
       <div className="st-wrap">
         <Reveal>
-          <span className="st-eyebrow" style={{ color: '#8a8a8a' }}>The collection</span>
+          <span className="st-eyebrow">The collection</span>
           <h2 className="st-h1" style={{ margin: '1.2rem 0 0.4em' }}>
             <Line i={0}>Live where</Line>
           </h2>

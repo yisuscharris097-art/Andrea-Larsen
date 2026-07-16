@@ -32,10 +32,10 @@ export default function Quotes() {
   const onUp = () => { drag.current.down = false; };
 
   return (
-    <section className="st st-dark-s st-section" style={{ overflow: 'hidden' }}>
+    <section className="st st-mist-s st-section" style={{ overflow: 'hidden' }}>
       <div className="st-wrap">
         <Reveal>
-          <span className="st-eyebrow" style={{ color: '#8a8a8a' }}>The Larsen standard</span>
+          <span className="st-eyebrow" style={{ color: '#4a5457' }}>The Larsen standard</span>
           <h2 className="st-h2" style={{ margin: '1rem 0 3rem' }}>
             <Line i={0}>What working with</Line>
             <Line i={1}>Andrea <span className="st-it">feels</span> like<span className="st-dash">–</span></Line>
@@ -51,14 +51,14 @@ export default function Quotes() {
         style={{ display: 'flex', gap: '1.4rem', overflowX: 'auto', padding: '0 clamp(1.25rem, 5vw, 6.5rem) 0.5rem', cursor: 'grab', scrollbarWidth: 'none', userSelect: 'none' }}
       >
         {QUOTES.map((c, i) => (
-          <blockquote key={i} style={{ flex: '0 0 min(480px, 82vw)', margin: 0, background: 'var(--st-card)', border: '1px solid var(--st-line-dark)', borderRadius: 20, padding: '2.4rem 2.2rem 2.8rem', position: 'relative', overflow: 'hidden' }}>
-            <span aria-hidden style={{ position: 'absolute', right: 8, bottom: -34, fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '9rem', lineHeight: 1, color: 'rgba(244,244,242,0.06)' }}>
+          <blockquote key={i} style={{ flex: '0 0 min(480px, 82vw)', margin: 0, background: '#FCFCFA', border: '1px solid rgba(35,41,44,0.12)', borderRadius: 20, padding: '2.4rem 2.2rem 2.8rem', position: 'relative', overflow: 'hidden' }}>
+            <span aria-hidden style={{ position: 'absolute', right: 8, bottom: -34, fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '9rem', lineHeight: 1, color: 'rgba(35,41,44,0.07)' }}>
               {String(i + 1).padStart(2, '0')}
             </span>
             <p style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', lineHeight: 1.1, margin: 0 }}>
               “{c.q}”
             </p>
-            <p style={{ color: 'var(--st-grey-dark)', marginTop: '1.1rem', fontSize: '0.95rem' }}>{c.d}</p>
+            <p style={{ color: '#5b666a', marginTop: '1.1rem', fontSize: '0.95rem' }}>{c.d}</p>
           </blockquote>
         ))}
       </div>

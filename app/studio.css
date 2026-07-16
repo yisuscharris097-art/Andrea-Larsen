@@ -121,15 +121,15 @@
 /* ── collections (índice negro) ─────────────────────────────────────────── */
 .st-row {
   display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 1.5rem; align-items: baseline;
-  padding: 1.5rem 1rem; border-top: 1px solid var(--st-line-dark);
-  text-decoration: none; color: #f4f4f2; position: relative;
+  padding: 1.5rem 1rem; border-top: 1px solid var(--st-line);
+  text-decoration: none; color: var(--st-ink); position: relative;
   transition: background 300ms var(--ease), color 300ms var(--ease), padding-left 300ms var(--ease);
 }
-.st-row:last-child { border-bottom: 1px solid var(--st-line-dark); }
+.st-row:last-child { border-bottom: 1px solid var(--st-line); }
 .st-row .r-name { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.2rem, 2.4vw, 2rem); letter-spacing: -0.02em; }
-.st-row .r-loc { color: var(--st-grey-dark); font-size: 0.9rem; }
-.st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--st-lime); }
-.st-row:hover { background: #3a3320; padding-left: 1.6rem; }
+.st-row .r-loc { color: var(--st-grey); font-size: 0.9rem; }
+.st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: #8C6D2F; }
+.st-row:hover { background: #DFE4E5; padding-left: 1.6rem; }
 .st-polaroid {
   position: fixed; pointer-events: none; z-index: 60; width: 300px; aspect-ratio: 4/3;
   border-radius: 12px; overflow: hidden; transform: rotate(-8deg) scale(0.94);
@@ -181,7 +181,7 @@
 .st-wordmark {
   font-family: var(--grotesk); font-weight: 500; font-stretch: 115%;
   font-size: clamp(6rem, 21vw, 21rem); line-height: 0.72; letter-spacing: -0.04em;
-  color: var(--st-lime); text-transform: lowercase; user-select: none;
+  color: var(--st-mist); text-transform: lowercase; user-select: none;
   display: block; transform: translateY(0.16em);
 }
 

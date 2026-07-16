@@ -13,9 +13,9 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const seg = (p: number, a: number, b: number) => clamp01((p - a) / (b - a));
 
 const LINES: { text: string; color: string; indent: string }[] = [
-  { text: 'Quality', color: '#F4F4F2', indent: '0' },
-  { text: '–Trust', color: '#E3C173', indent: '0.9em' },
-  { text: 'Legacy', color: '#F4F4F2', indent: '0.35em' },
+  { text: 'Quality', color: '#1A1A1A', indent: '0' },
+  { text: '–Trust', color: '#FCFCFA', indent: '0.9em' },
+  { text: 'Legacy', color: '#1A1A1A', indent: '0.35em' },
 ];
 
 export default function Manifesto() {
@@ -43,9 +43,9 @@ export default function Manifesto() {
   const sheet = reduced ? 1 : seg(p, 0.74, 0.92);
 
   return (
-    <div ref={wrapRef} className="st" style={{ position: 'relative', height: reduced ? 'auto' : '260vh', background: '#0d0d0d' }}>
+    <div ref={wrapRef} className="st" style={{ position: 'relative', height: reduced ? 'auto' : '260vh', background: '#AEB9BE' }}>
       <section
-        className="st-dark-s"
+        className="st-mist-s"
         aria-label="Quality, Trust, Legacy — the Larsen manifesto"
         style={{
           position: reduced ? 'relative' : 'sticky', top: 0, minHeight: '100svh',
@@ -54,7 +54,7 @@ export default function Manifesto() {
         }}
       >
         <div className="st-wrap" style={{ width: '100%' }}>
-          <span className="st-eyebrow" style={{ color: '#8a8a8a' }}>The Larsen manifesto</span>
+          <span className="st-eyebrow" style={{ color: '#4a5457' }}>The Larsen manifesto</span>
 
           <h2 style={{ margin: '1.6rem 0 0' }} aria-label="Quality, Trust, Legacy">
             {LINES.map((l, i) => {
@@ -70,7 +70,7 @@ export default function Manifesto() {
                   }}
                 >
                   {/* base fantasma */}
-                  <span style={{ color: 'rgba(244,244,242,0.13)' }}>{l.text}</span>
+                  <span style={{ color: 'rgba(26,26,26,0.14)' }}>{l.text}</span>
                   {/* relleno que avanza con el scroll */}
                   <span
                     style={{
