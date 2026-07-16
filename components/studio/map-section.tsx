@@ -29,9 +29,9 @@ export default function MapSection() {
             </svg>
             {/* pin custom */}
             <div style={{ position: 'absolute', left: '48%', top: '44%', transform: 'translate(-50%, -100%)' }}>
-              <div style={{ width: 64, height: 64, borderRadius: 999, background: 'rgba(200,243,29,0.35)', display: 'grid', placeItems: 'center' }}>
+              <div style={{ width: 64, height: 64, borderRadius: 999, background: 'rgba(227,193,115,0.45)', display: 'grid', placeItems: 'center' }}>
                 <div style={{ width: 34, height: 34, borderRadius: 999, background: '#0d0d0d', display: 'grid', placeItems: 'center' }}>
-                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#C8F31D" strokeWidth="1.6" aria-hidden><path d="M3 10l7-6 7 6M5 9v7h10V9M8.5 16v-4h3v4" /></svg>
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#E3C173" strokeWidth="1.6" aria-hidden><path d="M3 10l7-6 7 6M5 9v7h10V9M8.5 16v-4h3v4" /></svg>
                 </div>
               </div>
             </div>

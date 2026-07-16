@@ -13,7 +13,7 @@ import Magnetic from './magnetic';
 
 const INK = '#1A1714';
 const OXBLOOD = '#0d0d0d';
-const GOLD = '#C8F31D';
+const GOLD = '#E3C173';
 const PAPER = '#FAF9F7';
 const FONT = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
 const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";
@@ -108,7 +108,7 @@ export default function Flagship() {
             pointerEvents: info > 0.6 ? 'auto' : 'none',
           }}
         >
-          <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: '#C8F31D' }}>
+          <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: '#E3C173' }}>
             465 Pineville Road · Newtown, PA · Bucks County
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '1rem 2.4rem', marginTop: '.8rem' }}>

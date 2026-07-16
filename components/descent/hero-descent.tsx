@@ -24,7 +24,7 @@ const FRAMES = 160;
 const SCRUB_VH = 560; // scroll length of the pinned descent, in vh
 const frameSrc = (i: number) => `/descent/frames/f-${String(i).padStart(3, '0')}.webp`;
 
-const LIME = '#C8F31D';
+const LIME = '#E3C173';
 const GROTESK = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
 const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";
 const BODY = "var(--font-body), 'Inter', system-ui, sans-serif";

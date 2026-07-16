@@ -1,14 +1,14 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    STUDIO — design system del rediseño premium (referencias: Suffo + editorial
    claro + Nestoria). Tokens, tipografía y componentes compartidos.
-   Paleta: off-white #F4F4F2 · dark #0D0D0D · lima #C8F31D (solo sobre oscuro).
+   Paleta: off-white #F4F4F2 · dark #0D0D0D · lima #E3C173 (solo sobre oscuro).
    ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
   --st-bg: #f4f4f2;
   --st-dark: #0d0d0d;
   --st-card: #141414;
-  --st-lime: #c8f31d;
+  --st-lime: #e3c173;
   --st-ink: #1a1a1a;
   --st-grey: #8a8a8a;
   --st-grey-dark: #a0a0a0;
@@ -40,7 +40,7 @@
 .st-it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
 .st-dash { color: var(--st-lime); }
 .st-dark-s .st-dash { color: var(--st-lime); }
-.st-light-s .st-dash { color: #9dbf0e; } /* lima legible sobre claro (AA) */
+.st-light-s .st-dash { color: #8C6D2F; } /* lima legible sobre claro (AA) */
 
 .st-eyebrow {
   font-family: var(--body);
@@ -129,7 +129,7 @@
 .st-row .r-name { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.2rem, 2.4vw, 2rem); letter-spacing: -0.02em; }
 .st-row .r-loc { color: var(--st-grey-dark); font-size: 0.9rem; }
 .st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--st-lime); }
-.st-row:hover { background: #3a4222; padding-left: 1.6rem; }
+.st-row:hover { background: #3a3320; padding-left: 1.6rem; }
 .st-polaroid {
   position: fixed; pointer-events: none; z-index: 60; width: 300px; aspect-ratio: 4/3;
   border-radius: 12px; overflow: hidden; transform: rotate(-8deg) scale(0.94);
