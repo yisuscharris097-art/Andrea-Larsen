@@ -217,3 +217,39 @@
   font-size: clamp(5rem, 17vw, 17rem); line-height: 0.8; letter-spacing: -0.045em;
   color: rgba(255, 255, 255, 0.92); pointer-events: none; mix-blend-mode: overlay;
 }
+
+/* ── motion iteración 3 ─────────────────────────────────────────────────── */
+/* skew por velocidad de scroll (var seteada por CursorFX) */
+.st-card-l .ph img { transform: skewY(var(--scroll-skew, 0deg)); }
+.st-card-l:hover .ph img { transform: skewY(var(--scroll-skew, 0deg)) scale(1.05); }
+
+/* focus effect: al hover de una card, las vecinas se atenúan */
+.st-grid-cards:hover .st-card-l:not(:hover) { opacity: 0.62; }
+.st-card-l { transition: opacity 350ms var(--ease); }
+
+/* divisores de stats se dibujan de arriba a abajo */
+.st-stat { border-left: 0 !important; position: relative; }
+.st-stat::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--st-line); transform: scaleY(0); transform-origin: top; transition: transform 800ms var(--ease-o) calc(var(--i, 0) * 120ms); }
+.st-stat:first-child::before { display: none; }
+.st-reveal.in .st-stat::before { transform: scaleY(1); }
+
+/* FAQ: el + rota a × con spring */
+.st-faq-q .x { transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* imágenes de sección: reveal por máscara clip-path + scale */
+.st-imgreveal { clip-path: inset(12% 8% 12% 8% round 24px); transform: scale(1.12); transition: clip-path 900ms var(--ease-o), transform 1100ms var(--ease-o); }
+.st-reveal.in .st-imgreveal, .st-imgreveal.in { clip-path: inset(0 0 0 0 round 24px); transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .st-imgreveal { clip-path: none; transform: none; transition: none; }
+  .st-card-l .ph img { transform: none; }
+}
+
+/* pins del mapa: entrada con stagger + pulso */
+.st-pin { animation: stPinIn 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.st-pin::after { content: ''; position: absolute; inset: -6px; border-radius: 999px; border: 1.5px solid rgba(78,42,79,0.5); animation: stPulse 2.6s ease-out infinite; }
+@keyframes stPinIn { from { opacity: 0; transform: translate(-50%, -140%) scale(0.8); } to { opacity: 1; transform: translate(-50%, -100%) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .st-pin { animation: none; } .st-pin::after { animation: none; } }
+
+/* wordmark letra a letra (footer) */
+.st-wordmark-letters.in span > span { transform: translateY(0) !important; }
+@media (prefers-reduced-motion: reduce) { .st-wordmark-letters span > span { transform: none !important; transition: none !important; } }

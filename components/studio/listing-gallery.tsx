@@ -27,7 +27,7 @@ export default function ListingGallery({ photos, alt, tourHref }: { photos: stri
       </div>
 
       {photos.length > 1 ? (
-        <div style={{ columns: '3 220px', columnGap: '0.9rem' }}>
+        <div data-cursor="+" style={{ columns: '3 220px', columnGap: '0.9rem' }}>
           {shown.map((p, i) => (
             <button key={p} onClick={() => setLb(i)} aria-label={`Open photo ${i + 1} of ${photos.length}`}
               className="st-skel" style={{ display: 'block', width: '100%', border: 0, padding: 0, marginBottom: '0.9rem', borderRadius: 14, overflow: 'hidden', cursor: 'zoom-in', background: '#e2e2de', breakInside: 'avoid' }}>

@@ -7,7 +7,7 @@ export default function AgentEditorial() {
     <section className="st st-light-s st-section" id="agent">
       <div className="st-wrap st-agent-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 460px) minmax(0, 1fr)', gap: '4rem', alignItems: 'center' }}>
         <Reveal>
-          <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', aspectRatio: '4/5', background: '#e2e2de' }}>
+          <div className="st-imgreveal" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', aspectRatio: '4/5', background: '#e2e2de' }}>
             <Image src={agent.photo} alt={`${agent.name} — ${agent.titles[0]}`} fill style={{ objectFit: 'cover', filter: 'saturate(0.82)' }} sizes="(max-width: 900px) 90vw, 460px" />
             <div style={{ position: 'absolute', left: 14, bottom: 14, background: 'rgba(13,13,13,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', borderRadius: 14, padding: '0.7em 1.1em', fontSize: '0.78rem' }}>
               Trusted coast to coast · {agent.experience}

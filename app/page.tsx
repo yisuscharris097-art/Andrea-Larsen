@@ -10,6 +10,9 @@ import MapSection from '@/components/studio/map-section';
 import AgentEditorial from '@/components/studio/agent-editorial';
 import Quotes from '@/components/studio/quotes';
 import Faq from '@/components/studio/faq';
+import Marquee from '@/components/studio/marquee';
+import CursorFX from '@/components/studio/cursor-fx';
+import Curtain from '@/components/studio/curtain';
 import ContactForm from '@/components/studio/contact-form';
 import FooterStudio from '@/components/studio/footer-studio';
 
@@ -23,6 +26,8 @@ import FooterStudio from '@/components/studio/footer-studio';
 export default function Home() {
   return (
     <main className="st" id="top">
+      <CursorFX />
+      <Curtain />
       {/* 1 · EL DESCENSO — intocable en su mecánica, overlay v2 */}
       <HeroDescent />
 
@@ -31,6 +36,8 @@ export default function Home() {
 
       {/* 3 · Featured listings (grid editorial claro) */}
       <Featured />
+
+      <Marquee />
 
       {/* 4 · Manifesto tipográfico + ficha técnica */}
       <Manifesto />
@@ -58,6 +65,8 @@ export default function Home() {
 
       {/* 12 · FAQ */}
       <Faq />
+
+      <Marquee />
 
       {/* 13 · Contacto */}
       <ContactForm />

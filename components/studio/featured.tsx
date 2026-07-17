@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { properties, bySlug } from '@/lib/properties';
 import { Reveal, Line, Fade } from './ui';
 import { QuickView, useQuickView } from './quick-view';
+import Magnetic from '@/components/descent/magnetic';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -84,19 +85,20 @@ export default function Featured() {
               </h2>
             </div>
             <Fade i={2}>
-              <a className="st-pill st-pill--solid" href="/properties">See all properties →</a>
+              <Magnetic strength={0.22}><a className="st-pill st-pill--solid" href="/properties" data-curtain="Properties">See all properties →</a></Magnetic>
             </Fade>
           </div>
         </Reveal>
 
         <Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2.4rem 1.8rem' }}>
+          <div className="st-grid-cards" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2.4rem 1.8rem' }}>
             {six.map((p, i) => (
               <Fade key={p.slug} i={i % 3}>
                 <button
                   className="st-card-l"
                   onClick={() => qv.show(p)}
                   aria-label={`Quick view of ${p.address}`}
+                  data-cursor="View →"
                   style={{ background: 'none', border: 0, padding: 0, textAlign: 'left', width: '100%', cursor: 'pointer', font: 'inherit', color: 'inherit' }}
                 >
                   <CardPhoto p={p} />

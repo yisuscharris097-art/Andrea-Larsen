@@ -6,7 +6,7 @@ export default function MapSection() {
     <section className="st st-light-s st-section">
       <div className="st-wrap st-map-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) minmax(0, 1fr)', gap: '3.5rem', alignItems: 'center' }}>
         <Reveal>
-          <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', background: '#e9eae6', aspectRatio: '4/3' }}>
+          <div className="st-imgreveal" style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', background: '#e9eae6', aspectRatio: '4/3' }}>
             <svg viewBox="0 0 640 480" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden>
               <rect width="640" height="480" fill="#EDEEEA" />
               <g stroke="#D7D9D2" strokeWidth="10" fill="none">

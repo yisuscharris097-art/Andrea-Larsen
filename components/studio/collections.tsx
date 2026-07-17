@@ -22,12 +22,30 @@ export default function Collections() {
     return () => window.removeEventListener('scroll', clear);
   }, []);
 
+  const target = useRef({ x: -400, y: -400 });
+  const pos = useRef({ x: -400, y: -400 });
+
   const onMove = (e: React.MouseEvent) => {
-    const el = polRef.current;
-    if (!el) return;
-    el.style.left = `${Math.min(e.clientX + 26, window.innerWidth - 330)}px`;
-    el.style.top = `${e.clientY - 120}px`;
+    target.current = { x: Math.min(e.clientX + 26, window.innerWidth - 330), y: e.clientY - 120 };
   };
+
+  // lag físico: la preview persigue al cursor (lerp ~0.1)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = 0;
+    const loop = () => {
+      const el = polRef.current;
+      if (el) {
+        pos.current.x += (target.current.x - pos.current.x) * 0.11;
+        pos.current.y += (target.current.y - pos.current.y) * 0.11;
+        el.style.left = `${pos.current.x.toFixed(1)}px`;
+        el.style.top = `${pos.current.y.toFixed(1)}px`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <section className="st st-light-s st-section" id="collection" onMouseMove={onMove}>
@@ -48,6 +66,7 @@ export default function Collections() {
                 className="st-row"
                 href={`/listing/${p.slug}`}
                 onMouseEnter={() => setHover(i)}
+                data-cursor="View →"
                 onMouseLeave={() => setHover(-1)}
               >
                 <span className="r-name">{p.address}</span>

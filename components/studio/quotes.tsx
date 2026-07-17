@@ -95,6 +95,7 @@ export default function Quotes() {
         onPointerUp={onUp}
         onPointerLeave={(e) => { onUp(); paused.current = false; }}
         onPointerEnter={() => { paused.current = true; }}
+        data-cursor="Drag"
         style={{ display: 'flex', gap: '1.4rem', overflowX: 'auto', padding: '0 clamp(1.25rem, 5vw, 6.5rem) 0.5rem', cursor: 'grab', scrollbarWidth: 'none', userSelect: 'none' }}
       >
         {QUOTES.map((c, i) => (

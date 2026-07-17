@@ -268,7 +268,7 @@ export default function HeroDescent() {
           {/* wordmark entrelazado, cortado por el borde inferior del gate */}
           <div aria-hidden className="st-hero-mark">andrea</div>
 
-          <div style={{ textAlign: 'center', padding: '0 1.5rem', position: 'relative', zIndex: 4 }}>
+          <div style={{ textAlign: 'center', padding: '2rem 2.5rem', position: 'relative', zIndex: 4, background: 'radial-gradient(ellipse 60% 55% at 50% 50%, rgba(10,9,8,0.44), rgba(10,9,8,0) 75%)', borderRadius: 24 }}>
             <div className="gate-line" style={{ overflow: 'hidden' }}>
               <div className="gate-in" style={{ fontFamily: BODY, fontWeight: 500, fontSize: '.72rem', letterSpacing: '.16em', color: '#EFEFEA', textTransform: 'uppercase', animationDelay: '80ms' }}>
                 ● Luxury Real Estate — Love Living Coast2Coast
@@ -288,7 +288,7 @@ export default function HeroDescent() {
             </h1>
             <div className="gate-line" style={{ overflow: 'hidden', marginTop: '1rem' }}>
               <p className="gate-in" style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(1.05rem, 2.4vw, 1.5rem)', color: '#E9E9E2', margin: 0, animationDelay: '320ms' }}>
-                From the clouds of Miami, down to the one who&apos;ll hand you the keys.
+                From the clouds, down to the Jersey Shore — and the one who&apos;ll hand you the keys.
               </p>
             </div>
             <button
@@ -333,7 +333,7 @@ function HeroNav({ visible }: { visible: boolean }) {
     <nav className="st-nav" aria-label="Primary" style={{ opacity: visible ? 1 : 0, transition: 'opacity 400ms ease-out', pointerEvents: visible ? 'auto' : 'none' }}>
       <div className="grp">
         <a className="st-pill active" href="#top">Home</a>
-        <a className="st-pill" href="/properties">Properties</a>
+        <a className="st-pill" href="/properties" data-curtain="Properties">Properties</a>
         <a className="st-pill" href="#collection">Collection</a>
         <a className="st-pill" href="#agent">About</a>
         <a className="st-pill" href="#contact">Contact</a>

@@ -1,4 +1,5 @@
 import { agent } from '@/components/agent-data';
+import { WordmarkReveal, LocalClock } from './footer-bits';
 import { Reveal, Line, Fade } from './ui';
 
 /** CTA final + footer negro con wordmark lima cortado por el borde (patrón Suffo). */
@@ -26,7 +27,7 @@ export default function FooterStudio() {
           <Reveal>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '2rem', textAlign: 'left', marginTop: '5.5rem', paddingTop: '2.2rem', borderTop: '1px solid var(--st-line)', fontSize: '0.8rem', color: 'var(--st-grey)' }}>
               <div>
-                ALL RIGHTS RESERVED.<br />©2026 {agent.name.toUpperCase()}
+                ALL RIGHTS RESERVED.<br />©2026 {agent.name.toUpperCase()}<br /><LocalClock />
               </div>
               <div style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                 {agent.office.name}<br />{agent.office.address}<br />Equal Housing Opportunity · NJ · FL · AZ
@@ -44,9 +45,9 @@ export default function FooterStudio() {
         </div>
       </div>
 
-      {/* wordmark gigante cortado por el borde inferior */}
-      <div aria-hidden style={{ overflow: 'hidden', lineHeight: 0 }}>
-        <span className="st-wordmark" style={{ textAlign: 'center' }}>andrea</span>
+      {/* wordmark gigante, letra a letra, cortado por el borde inferior */}
+      <div aria-hidden style={{ overflow: 'hidden', lineHeight: 0, textAlign: 'center' }}>
+        <WordmarkReveal />
       </div>
     </footer>
   );

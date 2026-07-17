@@ -8,10 +8,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { properties, bySlug, type Property, type PropertyType } from '@/lib/properties';
 import { QuickView, useQuickView } from '@/components/studio/quick-view';
+import CursorFX from '@/components/studio/cursor-fx';
+import Curtain from '@/components/studio/curtain';
 import '../studio.css';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -28,6 +30,7 @@ export default function PropertiesPage() {
   const [rooms, setRooms] = useState(0);
   const [forSaleOnly, setForSaleOnly] = useState(false);
   const [mapView, setMapView] = useState(false);
+  const [sort, setSort] = useState<'price' | 'newest'>('price');
 
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get('property');
@@ -35,12 +38,34 @@ export default function PropertiesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const results = useMemo(() => properties.filter((p) =>
+  const results = useMemo(() => [...properties].sort((a, b) => sort === 'price' ? b.price - a.price : Number(b.mlsRef) - Number(a.mlsRef)).filter((p) =>
     (types.length === 0 || types.includes(p.type)) &&
     p.price <= price &&
     (rooms === 0 || (p.beds || 0) >= rooms) &&
     (!forSaleOnly || p.status === 'For Sale')
-  ), [types, price, rooms, forSaleOnly]);
+  ), [types, price, rooms, forSaleOnly, sort]);
+
+  // FLIP: las cards se REORDENAN físicamente al filtrar/ordenar
+  const cardRefs = useRef(new Map<string, HTMLElement>());
+  const prevRects = useRef(new Map<string, DOMRect>());
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const prev = prevRects.current;
+    cardRefs.current.forEach((el, slug) => {
+      const now = el.getBoundingClientRect();
+      const was = prev.get(slug);
+      if (was && (Math.abs(was.top - now.top) > 4 || Math.abs(was.left - now.left) > 4)) {
+        el.animate(
+          [{ transform: `translate(${(was.left - now.left).toFixed(1)}px, ${(was.top - now.top).toFixed(1)}px)` }, { transform: 'translate(0, 0)' }],
+          { duration: 520, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+        );
+      } else if (!was) {
+        el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 380, easing: 'ease-out' });
+      }
+    });
+    prev.clear();
+    cardRefs.current.forEach((el, slug) => prev.set(slug, el.getBoundingClientRect()));
+  }, [results]);
 
   const chips: { label: string; clear: () => void }[] = [
     ...types.map((t) => ({ label: t, clear: () => setTypes(types.filter((x) => x !== t)) })),
@@ -51,8 +76,10 @@ export default function PropertiesPage() {
 
   return (
     <main className="st st-light-s" style={{ minHeight: '100vh' }}>
+      <CursorFX />
+      <Curtain />
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem clamp(1.25rem, 4vw, 4rem)' }}>
-        <Link href="/" className="st-pill st-pill--dark">← Home</Link>
+        <Link href="/" className="st-pill st-pill--dark" data-curtain="Home">← Home</Link>
         <span className="st-eyebrow">Ocean City &amp; the Jersey Shore</span>
         <button className="st-pill st-pill--solid" onClick={() => setMapView(!mapView)} style={{ border: 0 }}>
           {mapView ? 'Change to list view' : 'Change to map view'}
@@ -104,6 +131,11 @@ export default function PropertiesPage() {
             <h1 style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontStretch: '115%', letterSpacing: '-0.02em', fontSize: '1.5rem', margin: 0 }}>
               Search results ({results.length})
             </h1>
+            <select value={sort} onChange={(e) => setSort(e.target.value as 'price' | 'newest')} aria-label="Sort results"
+              style={{ marginLeft: 'auto', border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.5em 1.1em', fontFamily: 'var(--body)', fontSize: '0.8rem', background: '#fff', cursor: 'pointer' }}>
+              <option value="price">Sort: Price</option>
+              <option value="newest">Sort: Newest</option>
+            </select>
             {chips.map((c) => (
               <button key={c.label} onClick={c.clear} className="st-pill st-pill--dark" style={{ fontSize: '0.72rem', padding: '0.4em 1em' }}>
                 {c.label} ×
@@ -130,7 +162,7 @@ export default function PropertiesPage() {
               </svg>
               {results.map((p) => (
                 <button key={p.slug} onClick={() => qv.show(p)} aria-label={`${p.address} — ${p.priceDisplay}`}
-                  style={{ position: 'absolute', left: `${p.map.x}%`, top: `${p.map.y}%`, transform: 'translate(-50%, -100%)', background: '#0d0d0d', color: '#E3C173', border: 0, borderRadius: 999, padding: '0.4em 0.9em', fontSize: '0.74rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 10px 24px rgba(10,10,10,.3)', whiteSpace: 'nowrap' }}>
+                  className="st-pin" style={{ position: 'absolute', left: `${p.map.x}%`, top: `${p.map.y}%`, transform: 'translate(-50%, -100%)', background: '#4E2A4F', color: '#fff', border: 0, borderRadius: 999, padding: '0.4em 0.9em', fontSize: '0.74rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 10px 24px rgba(10,10,10,.3)', whiteSpace: 'nowrap', animationDelay: `${results.indexOf(p) * 70}ms` }}>
                   ${(p.price / 1e6).toFixed(1)}M
                 </button>
               ))}
@@ -139,13 +171,16 @@ export default function PropertiesPage() {
             /* cards horizontales */
             <div style={{ display: 'grid', gap: '1.1rem' }}>
               {results.map((p) => (
-                <button key={p.slug} onClick={() => qv.show(p)} aria-label={`Quick view of ${p.address}`}
-                  style={{ display: 'grid', gridTemplateColumns: 'minmax(130px, 240px) 1fr auto', gap: '1.2rem', alignItems: 'center', background: '#fff', border: '1px solid var(--st-line)', borderRadius: 18, padding: '0.8rem', cursor: 'pointer', textAlign: 'left', font: 'inherit', color: 'inherit' }}>
+                <button key={p.slug} onClick={() => qv.show(p)} aria-label={`Quick view of ${p.address}`} data-cursor="View →"
+                  ref={(el) => { if (el) cardRefs.current.set(p.slug, el); else cardRefs.current.delete(p.slug); }}
+                  style={{ display: 'grid', gridTemplateColumns: 'minmax(170px, 320px) 1fr auto', gap: '1.2rem', alignItems: 'center', background: '#fff', border: '1px solid var(--st-line)', borderRadius: 18, padding: '0.8rem', cursor: 'pointer', textAlign: 'left', font: 'inherit', color: 'inherit', opacity: p.status === 'Pending' ? 0.78 : 1 }}>
                   <motion.div layoutId={`ph-${p.slug}`} transition={{ duration: 0.5, ease: EASE }} style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', aspectRatio: '4/3' }}>
                     <Image src={p.photo} alt={p.address} fill sizes="240px" style={{ objectFit: 'cover' }} />
                   </motion.div>
                   <div>
-                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--st-grey)' }}>{p.status} · {p.type}</div>
+                    <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--st-grey)', display: 'flex', alignItems: 'center', gap: '0.5em' }}>
+                      <span aria-hidden style={{ width: 8, height: 8, borderRadius: 99, background: p.status === 'For Sale' ? '#3E7A44' : '#B8860B' }} />
+                      {p.status} · {p.type}</div>
                     <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '1.15rem', letterSpacing: '-0.02em', margin: '0.25rem 0' }}>{p.address}</div>
                     <div style={{ fontSize: '0.84rem', color: 'var(--st-grey)' }}>{p.city}, {p.state} {p.zip}</div>
                     <div style={{ display: 'flex', gap: '0.9em', fontSize: '0.8rem', color: '#555', marginTop: '0.5rem' }}>

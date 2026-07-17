@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { properties, bySlug, related, AREA } from '@/lib/properties';
 import { agent } from '@/components/agent-data';
 import ListingGallery from '@/components/studio/listing-gallery';
+import CursorFX from '@/components/studio/cursor-fx';
+import Curtain from '@/components/studio/curtain';
 import '../../studio.css';
 
 export function generateStaticParams() {
@@ -39,13 +41,15 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
 
   return (
     <main className="st st-light-s" style={{ minHeight: '100vh' }}>
+      <CursorFX />
+      <Curtain />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* nav mínima */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem clamp(1.25rem, 5vw, 6.5rem)' }}>
-        <Link href="/" className="st-pill st-pill--dark">← Home</Link>
+        <Link href="/" className="st-pill st-pill--dark" data-curtain="Home">← Home</Link>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <Link href="/properties" className="st-pill st-pill--dark">All properties</Link>
+          <Link href="/properties" className="st-pill st-pill--dark" data-curtain="Properties">All properties</Link>
           <a href={agent.contact.calendly} target="_blank" rel="noopener noreferrer" className="st-pill st-pill--solid">Schedule a viewing</a>
         </div>
       </nav>
@@ -57,36 +61,41 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
         <span style={{ color: 'var(--st-ink)' }}>{p.address}</span>
       </div>
 
-      {/* header Monte: titular / foto / precio+specs */}
-      <header className="st-section lst-head" style={{ paddingTop: '2rem', display: 'grid', gridTemplateColumns: 'minmax(220px, 1fr) minmax(0, 1.6fr) minmax(220px, 0.9fr)', gap: '2.5rem', alignItems: 'center' }}>
-        <div>
-          <span className="st-eyebrow">{p.status} · {p.type}</span>
-          <h1 className="st-h2" style={{ margin: '1rem 0 0' }}>
-            {p.beds ? `${p.beds} bedroom` : `${p.lotAcres} acre`} {p.type === 'Land' ? 'parcel' : p.type.toLowerCase()} at <span className="st-it">{p.city}</span>
-          </h1>
+      {/* header: titular + precio arriba, FOTO PROTAGONISTA full-width debajo */}
+      <header className="st-section lst-head" style={{ paddingTop: '1.6rem', paddingBottom: '2.5rem' }}>
+        <div className="lst-head-row" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1.5rem 3rem', marginBottom: '2rem' }}>
+          <div style={{ maxWidth: 760 }}>
+            <span className="st-eyebrow">{p.status} · {p.type}</span>
+            <h1 className="st-h2" style={{ margin: '0.9rem 0 0' }}>
+              {p.beds ? `${p.beds} bedroom` : `${p.lotAcres} acre`} {p.type === 'Land' ? 'parcel' : p.type.toLowerCase()} at <span className="st-it">{p.city}</span>
+            </h1>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <span className="st-eyebrow">Asking price</span>
+            <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontVariantNumeric: 'tabular-nums', fontSize: 'clamp(2.2rem, 4vw, 3.6rem)', letterSpacing: '-0.02em', marginTop: '0.3rem' }}>{p.priceDisplay}</div>
+            <div style={{ color: 'var(--st-grey)', marginTop: '0.3rem' }}>{p.address}, {p.city}, {p.state} {p.zip}</div>
+          </div>
         </div>
-        <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', aspectRatio: '16/11', background: '#e2e2de' }}>
-          <Image src={p.photo} alt={`${p.address}, ${p.city} ${p.state}`} fill priority sizes="(max-width: 900px) 100vw, 55vw" style={{ objectFit: 'cover' }} />
-          <a href={`https://maps.google.com/?q=${encodeURIComponent(`${p.address}, ${p.city}, ${p.state} ${p.zip}`)}`} target="_blank" rel="noopener noreferrer" className="st-pill" style={{ position: 'absolute', left: 14, bottom: 14 }}>
+
+        <div style={{ position: 'relative', borderRadius: 26, overflow: 'hidden', aspectRatio: '21/10', background: '#e2e2de', minHeight: 380 }}>
+          <Image src={p.photo} alt={`${p.address}, ${p.city} ${p.state}`} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
+          <a href={`https://maps.google.com/?q=${encodeURIComponent(`${p.address}, ${p.city}, ${p.state} ${p.zip}`)}`} target="_blank" rel="noopener noreferrer" className="st-pill" style={{ position: 'absolute', left: 18, bottom: 18 }}>
             View on map ↗
           </a>
+          <span style={{ position: 'absolute', top: 18, left: 18, background: '#fff', borderRadius: 999, padding: '0.5em 1.1em', fontSize: '0.76rem', fontWeight: 500 }}>{p.status}</span>
         </div>
-        <div>
-          <span className="st-eyebrow">Asking price</span>
-          <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontVariantNumeric: 'tabular-nums', fontSize: 'clamp(2rem, 3.6vw, 3.2rem)', letterSpacing: '-0.02em', marginTop: '0.4rem' }}>{p.priceDisplay}</div>
-          <div style={{ color: 'var(--st-grey)', margin: '0.4rem 0 1.2rem' }}>{p.address}, {p.city}, {p.state} {p.zip}</div>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {p.features.map((f) => (
-              <span key={f} style={{ border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.78rem', background: '#fff' }}>
-                <span style={{ color: '#8C6D2F' }}>✓</span> {f}
-              </span>
-            ))}
-          </div>
+
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1.4rem' }}>
+          {p.features.map((f) => (
+            <span key={f} style={{ border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.78rem', background: '#fff' }}>
+              <span style={{ color: '#8C6D2F' }}>✓</span> {f}
+            </span>
+          ))}
         </div>
       </header>
 
       {/* cuerpo: descripción + ficha + entorno | card sticky */}
-      <div className="st-section lst-body" style={{ paddingTop: 0, display: 'grid', gridTemplateColumns: 'minmax(0, 1.8fr) minmax(280px, 1fr)', gap: '3.5rem', alignItems: 'start' }}>
+      <div className="st-section lst-body" style={{ paddingTop: 0, paddingBottom: '3rem', display: 'grid', gridTemplateColumns: 'minmax(0, 1.8fr) minmax(280px, 1fr)', gap: '3.5rem', alignItems: 'start' }}>
         <div>
           <span className="st-eyebrow">Description</span>
           <p className="st-body" style={{ marginTop: '1rem', maxWidth: '68ch' }}>{p.description}</p>
@@ -142,7 +151,7 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
       </div>
 
       {/* relacionadas */}
-      <section className="st-section" style={{ paddingTop: 0 }}>
+      <section className="st-section" style={{ paddingTop: '1rem', paddingBottom: '5rem' }}>
         <span className="st-eyebrow">More at the shore</span>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.6rem', marginTop: '1.4rem' }}>
           {related(p.slug).map((r) => (
