@@ -37,7 +37,7 @@ export default function FooterStudio() {
                 <a href={agent.social.YouTube} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>YOUTUBE</a>
               </div>
               <div>
-                <a href={`mailto:${agent.contact.email}`} style={{ color: '#8C6D2F', textDecoration: 'none' }}>{agent.contact.email}</a>
+                <a href={`mailto:${agent.contact.email}`} style={{ color: '#4E2A4F', textDecoration: 'none', fontWeight: 500 }}>{agent.contact.email}</a>
               </div>
             </div>
           </Reveal>

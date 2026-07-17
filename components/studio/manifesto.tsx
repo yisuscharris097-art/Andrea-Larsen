@@ -13,9 +13,9 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const seg = (p: number, a: number, b: number) => clamp01((p - a) / (b - a));
 
 const LINES: { text: string; color: string; indent: string }[] = [
-  { text: 'Quality', color: '#1A1A1A', indent: '0' },
+  { text: 'Quality', color: '#4E2A4F', indent: '0' },
   { text: '–Trust', color: '#FCFCFA', indent: '0.9em' },
-  { text: 'Legacy', color: '#1A1A1A', indent: '0.35em' },
+  { text: 'Legacy', color: '#4E2A4F', indent: '0.35em' },
 ];
 
 export default function Manifesto() {

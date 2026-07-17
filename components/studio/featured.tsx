@@ -101,7 +101,7 @@ export default function Featured() {
                 >
                   <CardPhoto p={p} />
                   <div className="meta">
-                    {p.beds ? (<span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}><Bed /> {p.beds} Beds</span>) : (<span>{p.lotAcres} acres</span>)}
+                    {p.beds ? (<span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}><Bed /> {p.beds} Beds</span>) : p.lotAcres ? (<span>{p.lotAcres} acres</span>) : (<span>{p.type === 'House' ? 'Multi-unit' : p.type}</span>)}
                     {p.baths ? (<><span aria-hidden>·</span><span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}><Bath /> {p.baths} Baths</span></>) : null}
                   </div>
                   <div className="name">{p.address}</div>

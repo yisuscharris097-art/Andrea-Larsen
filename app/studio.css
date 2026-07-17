@@ -15,6 +15,7 @@
   --st-line: #e5e5e1;
   --st-line-dark: rgba(244, 244, 242, 0.14);
   --st-mist: #aeb9be;
+  --st-plum: #4e2a4f;
   --grotesk: var(--font-grotesk), 'Archivo', system-ui, sans-serif;
   --serif: var(--font-serif), 'Instrument Serif', Georgia, serif;
   --body: var(--font-body), 'Inter', system-ui, sans-serif;
@@ -24,7 +25,7 @@
 
 /* ── typography ─────────────────────────────────────────────────────────── */
 .st { font-family: var(--body); color: var(--st-ink); background: var(--st-bg); }
-.st ::selection { background: var(--st-lime); color: var(--st-dark); }
+.st ::selection { background: var(--st-plum); color: #fff; }
 
 .st-h1, .st-h2, .st-h3, .st-num {
   font-family: var(--grotesk);
@@ -33,14 +34,15 @@
   line-height: 0.95;
   font-stretch: 115%;
 }
+.st-h1, .st-h2, .st-h3 { color: var(--st-plum); }
 .st-h1 { font-size: clamp(3.5rem, 9vw, 8.5rem); }
 .st-h2 { font-size: clamp(2.6rem, 6.4vw, 6rem); }
 .st-h3 { font-size: clamp(1.6rem, 3vw, 2.6rem); }
 .st-num { font-variant-numeric: tabular-nums; }
 .st-it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
-.st-dash { color: var(--st-lime); }
-.st-dark-s .st-dash { color: var(--st-lime); }
-.st-light-s .st-dash { color: #8C6D2F; } /* lima legible sobre claro (AA) */
+.st-dash { color: var(--st-plum); }
+.st-dark-s .st-dash { color: #E3C173; }
+
 
 .st-eyebrow {
   font-family: var(--body);
@@ -79,8 +81,8 @@
 .st-pill:hover, .st-pill.active { background: #fff; color: var(--st-dark); border-color: #fff; }
 .st-pill--dark { border-color: var(--st-ink); color: var(--st-ink); background: transparent; backdrop-filter: none; }
 .st-pill--dark:hover { background: var(--st-ink); color: #fff; border-color: var(--st-ink); }
-.st-pill--solid { background: var(--st-ink); color: #fff; border-color: var(--st-ink); backdrop-filter: none; }
-.st-pill--solid:hover { background: #000; }
+.st-pill--solid { background: var(--st-plum); color: #fff; border-color: var(--st-plum); backdrop-filter: none; }
+.st-pill--solid:hover { background: #3a1e3b; }
 
 /* ── mask reveal (titulares) ────────────────────────────────────────────── */
 .st-line { display: block; overflow: hidden; }
@@ -128,7 +130,7 @@
 .st-row:last-child { border-bottom: 1px solid var(--st-line); }
 .st-row .r-name { font-family: var(--grotesk); font-weight: 500; font-size: clamp(1.2rem, 2.4vw, 2rem); letter-spacing: -0.02em; }
 .st-row .r-loc { color: var(--st-grey); font-size: 0.9rem; }
-.st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: #8C6D2F; }
+.st-row .r-size { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--st-ink); }
 .st-row:hover { background: #DFE4E5; padding-left: 1.6rem; }
 .st-polaroid {
   position: fixed; pointer-events: none; z-index: 60; width: 300px; aspect-ratio: 4/3;
@@ -181,7 +183,7 @@
 .st-wordmark {
   font-family: var(--grotesk); font-weight: 500; font-stretch: 115%;
   font-size: clamp(6rem, 21vw, 21rem); line-height: 0.72; letter-spacing: -0.04em;
-  color: var(--st-mist); text-transform: lowercase; user-select: none;
+  color: var(--st-plum); text-transform: lowercase; user-select: none;
   display: block; transform: translateY(0.16em);
 }
 

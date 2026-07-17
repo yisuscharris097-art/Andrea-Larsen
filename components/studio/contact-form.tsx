@@ -106,7 +106,7 @@ export default function ContactForm() {
         </Reveal>
       </div>
       <style>{`@media (max-width: 900px){ .st-contact-grid{ grid-template-columns: 1fr !important; } .st-contact-two{ grid-template-columns: 1fr !important; } }
-        #contact input:focus, #contact select:focus, #contact textarea:focus { border-color: var(--st-ink); box-shadow: 0 0 0 3px rgba(227,193,115,0.35); }`}</style>
+        #contact input:focus, #contact select:focus, #contact textarea:focus { border-color: var(--st-plum); box-shadow: 0 0 0 3px rgba(78,42,79,0.25); }`}</style>
     </section>
   );
 }

@@ -108,7 +108,7 @@ export function Lightbox({
           <div ref={stripRef} style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '0.9rem 1.4rem 1.2rem', scrollbarWidth: 'none' }}>
             {photos.map((p, k) => (
               <button key={p} onClick={() => { setZoom(false); onIndex(k); }} aria-label={`Photo ${k + 1}`}
-                style={{ flex: '0 0 72px', height: 52, borderRadius: 8, overflow: 'hidden', border: k === i ? '2px solid #E3C173' : '2px solid transparent', opacity: k === i ? 1 : 0.55, padding: 0, cursor: 'pointer', background: '#111', transition: 'opacity 200ms var(--ease)' }}>
+                style={{ flex: '0 0 72px', height: 52, borderRadius: 8, overflow: 'hidden', border: k === i ? '2px solid #fff' : '2px solid transparent', opacity: k === i ? 1 : 0.55, padding: 0, cursor: 'pointer', background: '#111', transition: 'opacity 200ms var(--ease)' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </button>

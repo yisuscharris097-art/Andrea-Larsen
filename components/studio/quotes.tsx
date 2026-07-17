@@ -102,7 +102,7 @@ export default function Quotes() {
             <span aria-hidden style={{ position: 'absolute', right: 8, bottom: -34, fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '9rem', lineHeight: 1, color: 'rgba(35,41,44,0.07)' }}>
               {String(i + 1).padStart(2, '0')}
             </span>
-            <p style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', lineHeight: 1.1, margin: 0 }}>
+            <p style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, letterSpacing: '-0.02em', fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', lineHeight: 1.1, margin: 0, color: '#4E2A4F' }}>
               “{c.q}”
             </p>
             <p style={{ color: '#5b666a', marginTop: '1.1rem', fontSize: '0.95rem' }}>{c.d}</p>
