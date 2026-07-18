@@ -38,13 +38,15 @@ export function Fade({ children, i = 0, className = '', style }: { children: Rea
   return <div className={`st-fade ${className}`} style={{ ...style, ['--i' as any]: i }}>{children}</div>;
 }
 
-/** Animated number that counts up when visible. Keeps suffix/prefix static. */
+/** Animated number that counts up when visible.
+ *  SSR/no-JS SIEMPRE muestra el valor final (nunca ceros) — el count-up es
+ *  progressive enhancement que arranca solo cuando hay JS y el elemento entra. */
 export function CountUp({ to, prefix = '', suffix = '' }: { to: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = prefix + to.toLocaleString('en-US') + suffix; return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // valor final ya renderizado
     const io = new IntersectionObserver((es) => {
       es.forEach((e) => {
         if (!e.isIntersecting) return; io.unobserve(e.target);
@@ -56,9 +58,9 @@ export function CountUp({ to, prefix = '', suffix = '' }: { to: number; prefix?:
         };
         requestAnimationFrame(step);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.4 });
     io.observe(el);
     return () => io.disconnect();
   }, [to, prefix, suffix]);
-  return <span ref={ref}>{prefix}0{suffix}</span>;
+  return <span ref={ref}>{prefix}{to.toLocaleString('en-US')}{suffix}</span>;
 }

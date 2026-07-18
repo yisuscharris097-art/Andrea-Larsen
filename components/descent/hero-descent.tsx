@@ -332,11 +332,11 @@ function HeroNav({ visible }: { visible: boolean }) {
   return (
     <nav className="st-nav" aria-label="Primary" style={{ opacity: visible ? 1 : 0, transition: 'opacity 400ms ease-out', pointerEvents: visible ? 'auto' : 'none' }}>
       <div className="grp">
-        <a className="st-pill active" href="#top">Home</a>
+        <a className="st-pill active" href="/">Home</a>
         <a className="st-pill" href="/properties" data-curtain="Properties">Properties</a>
-        <a className="st-pill" href="#collection">Collection</a>
-        <a className="st-pill" href="#agent">About</a>
-        <a className="st-pill" href="#contact">Contact</a>
+        <a className="st-pill" href="/collection" data-curtain="Collection">Collection</a>
+        <a className="st-pill" href="/about" data-curtain="About">About</a>
+        <a className="st-pill" href="/contact" data-curtain="Contact">Contact</a>
       </div>
       <div className="grp secondary">
         <a className="st-pill" href="https://calendly.com/andrealarsen" target="_blank" rel="noopener noreferrer">Start exploring →</a>

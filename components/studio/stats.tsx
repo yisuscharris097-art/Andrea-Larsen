@@ -18,7 +18,7 @@ export default function Stats() {
             <div className="l">States licensed — AZ · FL · NJ</div>
           </Fade>
           <Fade i={3} className="st-stat" style={{ ['--i' as any]: 3 }}>
-            <div className="v"><CountUp to={10} /></div>
+            <div className="v"><CountUp to={20} suffix="+" /></div>
             <div className="l">Residences in the collection</div>
           </Fade>
         </div>
