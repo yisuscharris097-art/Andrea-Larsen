@@ -30,7 +30,7 @@ export default function PropertiesPage() {
   const [rooms, setRooms] = useState(0);
   const [forSaleOnly, setForSaleOnly] = useState(false);
   const [mapView, setMapView] = useState(false);
-  const [sort, setSort] = useState<'price' | 'newest'>('price');
+  const [sort, setSort] = useState<'price' | 'newest' | 'sqft'>('price');
 
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get('property');
@@ -38,7 +38,7 @@ export default function PropertiesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const results = useMemo(() => [...properties].sort((a, b) => sort === 'price' ? b.price - a.price : Number(b.mlsRef) - Number(a.mlsRef)).filter((p) =>
+  const results = useMemo(() => [...properties].sort((a, b) => sort === 'price' ? b.price - a.price : sort === 'sqft' ? (b.sqft || 0) - (a.sqft || 0) : Number(b.mlsRef) - Number(a.mlsRef)).filter((p) =>
     (types.length === 0 || types.includes(p.type)) &&
     p.price <= price &&
     (rooms === 0 || (p.beds || 0) >= rooms) &&
@@ -131,10 +131,11 @@ export default function PropertiesPage() {
             <h1 style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontStretch: '115%', letterSpacing: '-0.02em', fontSize: '1.5rem', margin: 0 }}>
               Search results ({results.length})
             </h1>
-            <select value={sort} onChange={(e) => setSort(e.target.value as 'price' | 'newest')} aria-label="Sort results"
+            <select value={sort} onChange={(e) => setSort(e.target.value as 'price' | 'newest' | 'sqft')} aria-label="Sort results"
               style={{ marginLeft: 'auto', border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.5em 1.1em', fontFamily: 'var(--body)', fontSize: '0.8rem', background: '#fff', cursor: 'pointer' }}>
               <option value="price">Sort: Price</option>
               <option value="newest">Sort: Newest</option>
+              <option value="sqft">Sort: Sq Ft</option>
             </select>
             {chips.map((c) => (
               <button key={c.label} onClick={c.clear} className="st-pill st-pill--dark" style={{ fontSize: '0.72rem', padding: '0.4em 1em' }}>

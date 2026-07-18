@@ -32,6 +32,14 @@ export default function FooterStudio() {
               <div style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                 {agent.office.name}<br />{agent.office.address}<br />Equal Housing Opportunity · NJ · FL · AZ
               </div>
+              <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap' }}>
+                <a href="/properties" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>PROPERTIES</a>
+                <a href="/collection" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>COLLECTION</a>
+                <a href="/sell" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>SELL</a>
+                <a href="/about" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>ABOUT</a>
+                <a href="/testimonials" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>REVIEWS</a>
+                <a href="/neighborhoods/ocean-city" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>OCEAN CITY</a>
+              </div>
               <div style={{ display: 'flex', gap: '1.6rem' }}>
                 <a href={agent.social.Instagram} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>INSTAGRAM</a>
                 <a href={agent.social.LinkedIn} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>LINKEDIN</a>

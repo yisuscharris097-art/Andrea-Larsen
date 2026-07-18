@@ -335,6 +335,7 @@ function HeroNav({ visible }: { visible: boolean }) {
         <a className="st-pill active" href="/">Home</a>
         <a className="st-pill" href="/properties" data-curtain="Properties">Properties</a>
         <a className="st-pill" href="/collection" data-curtain="Collection">Collection</a>
+        <a className="st-pill" href="/sell" data-curtain="Sell">Sell</a>
         <a className="st-pill" href="/about" data-curtain="About">About</a>
         <a className="st-pill" href="/contact" data-curtain="Contact">Contact</a>
       </div>

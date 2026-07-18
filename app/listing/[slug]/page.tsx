@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { properties, bySlug, related, AREA } from '@/lib/properties';
 import { agent } from '@/components/agent-data';
 import ListingGallery from '@/components/studio/listing-gallery';
+import MortgageCalculator from '@/components/studio/mortgage-calculator';
+import ShareButton from '@/components/studio/share-button';
 import CursorFX from '@/components/studio/cursor-fx';
 import Curtain from '@/components/studio/curtain';
 import '../../studio.css';
@@ -118,6 +120,9 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
           {/* galería completa (masonry + lightbox) */}
           <ListingGallery photos={p.photos} alt={`${p.address}, ${p.city} ${p.state}`} tourHref={agent.contact.calendly} />
 
+          {/* mortgage calculator (F2.2) */}
+          <MortgageCalculator price={p.price} isCondo={p.type === 'Condo'} />
+
           {/* entorno */}
           <span className="st-eyebrow" style={{ display: 'inline-flex', marginTop: '3.4rem' }}>The area — Ocean City</span>
           <dl className="st-sheet" style={{ marginTop: '1.2rem' }}>
@@ -142,6 +147,8 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
           <div style={{ display: 'grid', gap: '0.5rem', marginTop: '1.1rem' }}>
             <a className="st-pill st-pill--solid" style={{ justifyContent: 'center' }} href={agent.contact.calendly} target="_blank" rel="noopener noreferrer">Schedule a private viewing</a>
             <a className="st-pill st-pill--dark" style={{ justifyContent: 'center' }} href={`tel:${agent.office.phone.replace(/[^\d]/g, '')}`}>{agent.office.phone}</a>
+            <a className="st-pill st-pill--dark" style={{ justifyContent: 'center' }} href={`mailto:${agent.contact.email}?subject=${encodeURIComponent('More info — ' + p.address + ', ' + p.city)}`}>Request more info</a>
+            <ShareButton title={`${p.address}, ${p.city} ${p.state} — ${p.priceDisplay}`} />
             <a className="st-pill st-pill--dark" style={{ justifyContent: 'center' }} href={p.detailUrl} target="_blank" rel="noopener noreferrer">Official listing ↗</a>
           </div>
           <p style={{ fontSize: '0.72rem', color: 'var(--st-grey)', lineHeight: 1.5, marginTop: '1rem' }}>
