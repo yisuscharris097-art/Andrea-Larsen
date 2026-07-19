@@ -11,6 +11,7 @@ import AgentEditorial from '@/components/studio/agent-editorial';
 import Quotes from '@/components/studio/quotes';
 import Faq from '@/components/studio/faq';
 import Marquee from '@/components/studio/marquee';
+import { TestimonialsHome, JustSold, NeighborhoodsHome, HowItWorks, PressAwards, FinalCta } from '@/components/studio/home-extras';
 import CursorFX from '@/components/studio/cursor-fx';
 import Curtain from '@/components/studio/curtain';
 import ContactForm from '@/components/studio/contact-form';
@@ -37,6 +38,12 @@ export default function Home() {
       {/* 3 · Featured listings (grid editorial claro) */}
       <Featured />
 
+      {/* NUEVA · Testimonials (se muestra al cargar contenido real) */}
+      <TestimonialsHome />
+
+      {/* NUEVA · Just Sold (se muestra al cargar contenido real) */}
+      <JustSold />
+
       <Marquee />
 
       {/* 4 · Manifesto tipográfico + ficha técnica */}
@@ -48,7 +55,16 @@ export default function Home() {
       {/* 6 · Flagship $18.8M — expansión de imagen */}
       <Flagship />
 
-      {/* 7 · Collections — índice negro con polaroid hover */}
+      {/* NUEVA · Neighborhoods */}
+      <NeighborhoodsHome />
+
+      {/* NUEVA · How it works */}
+      <HowItWorks />
+
+      {/* NUEVA · Press & Affiliations */}
+      <PressAwards />
+
+      {/* 7 · Collections — índice con polaroid hover */}
       <Collections />
 
       {/* 8 · Respiro gris-azulado + búsqueda */}
@@ -70,6 +86,9 @@ export default function Home() {
 
       {/* 13 · Contacto */}
       <ContactForm />
+
+      {/* NUEVA · Final CTA banner */}
+      <FinalCta />
 
       {/* 14 · CTA final + footer con wordmark */}
       <FooterStudio />

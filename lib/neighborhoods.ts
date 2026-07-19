@@ -54,6 +54,45 @@ export const neighborhoods: Neighborhood[] = [
       { k: 'New construction', d: 'Creek View Lane and similar enclaves bring modern floor plans to the mainland.' },
     ],
   },
+  {
+    slug: 'north-wildwood',
+    name: 'North Wildwood',
+    tagline: 'Seawall sunrises and free beaches',
+    vibe:
+      'The north end of the Wildwoods, anchored by the Hereford Inlet Lighthouse and its gardens. Mornings belong to the seawall walk, afternoons to some of the widest free beaches on the coast, and evenings to a lively bar-and-restaurant scene the quieter towns leave to it.',
+    bullets: [
+      { k: 'The seawall', d: 'The concrete promenade from 2nd Avenue around the inlet — the best sunrise walk on the island.' },
+      { k: 'Free beaches', d: 'No beach tags — wide guarded sand all summer.' },
+      { k: 'Hereford Inlet', d: 'The 1874 lighthouse and cottage gardens at the heart of the old town.' },
+      { k: 'Dining', d: 'A genuine year-round restaurant scene, from clam bars to white-tablecloth.' },
+    ],
+  },
+  {
+    slug: 'egg-harbor-township',
+    name: 'Egg Harbor Township',
+    tagline: 'Bayfront room to breathe',
+    vibe:
+      'The mainland township behind the shore towns, where lots get bigger and the back bays open up. Anchorage Poin and the bayfront corridors offer waterfront living with quick runs to Ocean City, Margate and Atlantic City.',
+    bullets: [
+      { k: 'The bays', d: 'Lagoon and bayfront homes with docks — boat to the ocean in minutes.' },
+      { k: 'Space', d: 'Larger lots and square footage than the islands allow.' },
+      { k: 'In between', d: 'Fifteen minutes to Ocean City sand or Atlantic City dining.' },
+      { k: 'Year-round', d: 'Full-service township living: schools, shopping, services.' },
+    ],
+  },
+  {
+    slug: 'marmora',
+    name: 'Marmora',
+    tagline: 'The gateway to Ocean City',
+    vibe:
+      'The Upper Township community at the foot of the Roosevelt Boulevard bridge — five minutes from Ocean City beaches with mainland taxes and elbow room. Pine-lined roads, marinas on the Tuckahoe River side, and a quieter pace that suits year-round shore families.',
+    bullets: [
+      { k: 'The bridge', d: 'Roosevelt Boulevard drops you at 34th Street, Ocean City, in minutes.' },
+      { k: 'Value', d: 'Mainland pricing and lower taxes minutes from the island.' },
+      { k: 'Outdoors', d: 'Corson’s Inlet State Park and river marinas nearby.' },
+      { k: 'Community', d: 'Upper Township schools and a genuine small-town calendar.' },
+    ],
+  },
 ];
 
 export const bySlugNb = (slug: string) => neighborhoods.find((n) => n.slug === slug);
