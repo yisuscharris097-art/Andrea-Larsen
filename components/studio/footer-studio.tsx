@@ -38,6 +38,7 @@ export default function FooterStudio() {
                 <a href="/sell" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>SELL</a>
                 <a href="/about" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>ABOUT</a>
                 <a href="/testimonials" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>REVIEWS</a>
+                <a href="/blog" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>JOURNAL</a>
                 <a href="/neighborhoods/ocean-city" style={{ color: 'var(--st-ink)', textDecoration: 'none' }}>OCEAN CITY</a>
               </div>
               <div style={{ display: 'flex', gap: '1.6rem' }}>

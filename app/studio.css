@@ -253,3 +253,20 @@
 /* wordmark letra a letra (footer) */
 .st-wordmark-letters.in span > span { transform: translateY(0) !important; }
 @media (prefers-reduced-motion: reduce) { .st-wordmark-letters span > span { transform: none !important; transition: none !important; } }
+
+/* ── blog article body ─────────────────────────────────────────────────── */
+.blog-body { font-size: 1.08rem; line-height: 1.72; color: #3a3a38; }
+.blog-body p { margin: 0 0 1.35em; max-width: 70ch; }
+.blog-body h2 { font-family: var(--grotesk); font-weight: 500; font-stretch: 115%; letter-spacing: -0.02em; font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--st-plum); margin: 2em 0 0.7em; }
+.blog-body h3 { font-family: var(--grotesk); font-weight: 500; font-stretch: 115%; letter-spacing: -0.01em; font-size: 1.2rem; color: var(--st-plum); margin: 1.8em 0 0.5em; }
+.blog-body a { color: var(--st-plum); font-weight: 500; }
+.blog-body strong { color: var(--st-ink); }
+.blog-body ul, .blog-body ol { margin: 0 0 1.4em; padding-left: 1.3em; max-width: 66ch; }
+.blog-body li { margin-bottom: 0.5em; }
+
+/* ── blog featured card responsive ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .blog-featured { grid-template-columns: minmax(0, 1fr) !important; }
+  .blog-featured .st-skel { min-height: 0 !important; }
+  .blog-featured > div:last-child { padding: 0 1.6rem 1.8rem !important; }
+}
