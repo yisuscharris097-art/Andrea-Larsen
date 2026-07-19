@@ -377,3 +377,6 @@
 }
 .pmap-pop:focus, .pmap-pop:focus-visible { outline: 2px solid var(--st-plum); outline-offset: 2px; border-radius: 8px; }
 .pmap-pop .ph:focus { outline: none; }
+
+/* ── mapa en la home ───────────────────────────────────────────────────── */
+.home-map .pmap-canvas { height: clamp(380px, 54vh, 560px); }
