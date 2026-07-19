@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { properties, bySlug, related, AREA } from '@/lib/properties';
 import { agent } from '@/components/agent-data';
 import ListingGallery from '@/components/studio/listing-gallery';
+import ListingMap from '@/components/studio/listing-map';
+import geoJson from '@/lib/geo.json';
 import MortgageCalculator from '@/components/studio/mortgage-calculator';
 import ShareButton from '@/components/studio/share-button';
 import CursorFX from '@/components/studio/cursor-fx';
@@ -81,8 +83,8 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
 
         <div style={{ position: 'relative', borderRadius: 26, overflow: 'hidden', aspectRatio: '21/10', background: '#e2e2de', minHeight: 380 }}>
           <Image src={p.photo} alt={`${p.address}, ${p.city} ${p.state}`} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
-          <a href={`https://maps.google.com/?q=${encodeURIComponent(`${p.address}, ${p.city}, ${p.state} ${p.zip}`)}`} target="_blank" rel="noopener noreferrer" className="st-pill" style={{ position: 'absolute', left: 18, bottom: 18 }}>
-            View on map ↗
+          <a href="#location" className="st-pill" style={{ position: 'absolute', left: 18, bottom: 18 }}>
+            View on map ↓
           </a>
           <span style={{ position: 'absolute', top: 18, left: 18, background: '#fff', borderRadius: 999, padding: '0.5em 1.1em', fontSize: '0.76rem', fontWeight: 500 }}>{p.status}</span>
         </div>
@@ -133,6 +135,14 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
               </div>
             ))}
           </dl>
+
+          {/* mapa de ubicación (MapLibre, estilo del sitio) */}
+          {(geoJson as Record<string, { lat: number; lng: number }>)[p.slug] && (
+            <ListingMap
+              geo={(geoJson as Record<string, { lat: number; lng: number }>)[p.slug]}
+              address={p.address} city={p.city} state={p.state} zip={p.zip} status={p.status}
+            />
+          )}
         </div>
 
         {/* Andrea sticky */}

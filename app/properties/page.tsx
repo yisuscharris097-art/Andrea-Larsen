@@ -12,6 +12,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { properties, bySlug, type Property, type PropertyType } from '@/lib/properties';
 import { QuickView, useQuickView } from '@/components/studio/quick-view';
+import PropertiesMap from '@/components/studio/properties-map';
 import CursorFX from '@/components/studio/cursor-fx';
 import Curtain from '@/components/studio/curtain';
 import '../studio.css';
@@ -30,13 +31,24 @@ export default function PropertiesPage() {
   const [rooms, setRooms] = useState(0);
   const [forSaleOnly, setForSaleOnly] = useState(false);
   const [mapView, setMapView] = useState(false);
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const [sort, setSort] = useState<'price' | 'newest' | 'sqft'>('price');
 
   useEffect(() => {
-    const slug = new URLSearchParams(window.location.search).get('property');
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('property');
     if (slug) { const p = bySlug(slug); if (p) qv.show(p); }
+    if (params.get('view') === 'map') setMapView(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ?view=map compartible en la URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (mapView) params.set('view', 'map'); else params.delete('view');
+    const qs = params.toString();
+    window.history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
+  }, [mapView]);
 
   const results = useMemo(() => [...properties].sort((a, b) => sort === 'price' ? b.price - a.price : sort === 'sqft' ? (b.sqft || 0) - (a.sqft || 0) : Number(b.mlsRef) - Number(a.mlsRef)).filter((p) =>
     (types.length === 0 || types.includes(p.type)) &&
@@ -151,22 +163,26 @@ export default function PropertiesPage() {
           </div>
 
           {mapView ? (
-            /* mapa estilizado con pins */
-            <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', background: '#E9EAE6', aspectRatio: '4/3' }}>
-              <svg viewBox="0 0 640 480" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden>
-                <rect width="640" height="480" fill="#EDEEEA" />
-                <path d="M-20 430 C160 380 480 460 660 400 L660 500 L-20 500 Z" fill="#D7E4EA" />
-                <g stroke="#D7D9D2" strokeWidth="8" fill="none">
-                  <path d="M-20 120 C160 90 300 170 660 130" /><path d="M-20 300 C200 280 420 330 660 290" />
-                  <path d="M120 -20 C140 160 90 320 130 500" /><path d="M380 -20 C360 180 420 340 390 500" />
-                </g>
-              </svg>
-              {results.map((p) => (
-                <button key={p.slug} onClick={() => qv.show(p)} aria-label={`${p.address} — ${p.priceDisplay}`}
-                  className="st-pin" style={{ position: 'absolute', left: `${p.map.x}%`, top: `${p.map.y}%`, transform: 'translate(-50%, -100%)', background: '#4E2A4F', color: '#fff', border: 0, borderRadius: 999, padding: '0.4em 0.9em', fontSize: '0.74rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 10px 24px rgba(10,10,10,.3)', whiteSpace: 'nowrap', animationDelay: `${results.indexOf(p) * 70}ms` }}>
-                  ${(p.price / 1e6).toFixed(1)}M
-                </button>
-              ))}
+            /* map view real: sidebar de listings + mapa interactivo */
+            <div className="pmap-split">
+              <div className="pmap-side">
+                {results.map((p) => (
+                  <button key={p.slug} onClick={() => qv.show(p)}
+                    className={`pmap-card${hoveredSlug === p.slug ? ' hot' : ''}`}
+                    onMouseEnter={() => setHoveredSlug(p.slug)} onMouseLeave={() => setHoveredSlug(null)}
+                    aria-label={`Quick view of ${p.address}`}>
+                    <span className="th"><Image src={p.photo} alt="" fill sizes="96px" style={{ objectFit: 'cover' }} /></span>
+                    <span>
+                      <span className="pr">{p.priceDisplay}</span>
+                      <span className="ad" style={{ display: 'block' }}>{p.address}, {p.city}</span>
+                    </span>
+                  </button>
+                ))}
+                {results.length === 0 && (
+                  <p style={{ color: 'var(--st-grey)', padding: '2rem 0', textAlign: 'center' }}>No properties match those filters.</p>
+                )}
+              </div>
+              <PropertiesMap results={results} hoveredSlug={hoveredSlug} onPinHover={setHoveredSlug} />
             </div>
           ) : (
             /* cards horizontales */

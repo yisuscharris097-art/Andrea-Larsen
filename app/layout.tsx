@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Archivo, Instrument_Serif, Inter } from 'next/font/google';
 import './globals.css';
 import './studio.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 const archivo = Archivo({
   subsets: ['latin'],
