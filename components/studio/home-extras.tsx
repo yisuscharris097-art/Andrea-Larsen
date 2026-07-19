@@ -19,16 +19,26 @@ export function TestimonialsHome() {
       <div className="st-wrap">
         <Reveal>
           <span className="st-eyebrow">Client words</span>
-          <h2 className="st-h2" style={{ margin: '1rem 0 2.6rem' }}>
+          <h2 className="st-h2" style={{ margin: '1rem 0 1rem' }}>
             <Line i={0}>They said it</Line>
             <Line i={1}><span className="st-it">better.</span></Line>
           </h2>
+          <Fade i={2}>
+            <p style={{ fontSize: '0.8rem', color: 'var(--st-grey)', margin: '0 0 2.2rem' }}>
+              Illustrative examples — verified client reviews are on <a href="/testimonials" style={{ color: '#4E2A4F' }}>Zillow &amp; Google</a> and will be featured here with permission.
+            </p>
+          </Fade>
         </Reveal>
         <Reveal>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.6rem' }}>
             {testimonials.map((t, i) => (
               <Fade key={t.name} i={i}>
                 <figure style={{ margin: 0, background: '#fff', border: '1px solid var(--st-line)', borderRadius: 20, padding: '2rem 1.8rem', height: '100%' }}>
+                  {t.sample && (
+                    <span style={{ display: 'inline-block', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--st-grey)', border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.3em 0.9em', marginBottom: '0.9rem' }}>
+                      Sample
+                    </span>
+                  )}
                   <blockquote style={{ margin: 0, fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '1.15rem', lineHeight: 1.3, letterSpacing: '-0.01em', color: '#4E2A4F' }}>
                     “{t.quote}”
                   </blockquote>
@@ -56,9 +66,9 @@ export function JustSold() {
     <section className="st st-mist-s st-section" aria-label="Recently sold">
       <div className="st-wrap">
         <Reveal>
-          <span className="st-eyebrow" style={{ color: '#4a5457' }}>Just sold</span>
+          <span className="st-eyebrow" style={{ color: '#4a5457' }}>Moving fast</span>
           <h2 className="st-h2" style={{ margin: '1rem 0 2.6rem' }}>
-            <Line i={0}>Recently <span className="st-it">closed.</span></Line>
+            <Line i={0}>Spoken for, <span className="st-it">already.</span></Line>
           </h2>
         </Reveal>
         <Reveal>
@@ -69,12 +79,12 @@ export function JustSold() {
                   <div style={{ position: 'relative', aspectRatio: '4/3' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={h.photo} alt={h.address} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    <span style={{ position: 'absolute', top: 12, left: 12, background: '#4E2A4F', color: '#fff', borderRadius: 999, padding: '0.4em 1em', fontSize: '0.72rem', fontWeight: 600 }}>SOLD</span>
+                    <span style={{ position: 'absolute', top: 12, left: 12, background: '#4E2A4F', color: '#fff', borderRadius: 999, padding: '0.4em 1em', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase' }}>{h.note || 'Sold'}</span>
                   </div>
                   <div style={{ padding: '1rem 1.1rem' }}>
                     <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '1.02rem' }}>{h.address}</div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--st-grey)', marginTop: 2 }}>
-                      {h.city}{h.salePrice ? ` · Sold ${h.salePrice}` : ''}{h.note ? ` · ${h.note}` : ''}
+                      {h.city}{h.salePrice ? ` · Sold ${h.salePrice}` : h.listPrice ? ` · Listed ${h.listPrice}` : ''}
                     </div>
                   </div>
                 </div>
