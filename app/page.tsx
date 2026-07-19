@@ -16,6 +16,8 @@ import CursorFX from '@/components/studio/cursor-fx';
 import Curtain from '@/components/studio/curtain';
 import ContactForm from '@/components/studio/contact-form';
 import FooterStudio from '@/components/studio/footer-studio';
+import JournalHome from '@/components/studio/journal-home';
+import { allPosts } from '@/lib/blog';
 
 /*
  * Rediseño premium (referencias: Suffo + editorial claro + Nestoria).
@@ -25,6 +27,15 @@ import FooterStudio from '@/components/studio/footer-studio';
  */
 
 export default function Home() {
+  const journalPosts = allPosts().slice(0, 3).map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    category: p.category,
+    dateDisplay: p.dateDisplay,
+    readMin: p.readMin,
+    image: p.image,
+    excerpt: p.excerpt,
+  }));
   return (
     <main className="st" id="top">
       <CursorFX />
@@ -81,6 +92,9 @@ export default function Home() {
 
       {/* 12 · FAQ */}
       <Faq />
+
+      {/* NUEVA · The Journal — índice editorial del blog */}
+      <JournalHome posts={journalPosts} />
 
       <Marquee />
 
