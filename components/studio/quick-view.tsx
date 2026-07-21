@@ -62,8 +62,17 @@ export function QuickView({ property, onClose }: { property: Property | null; on
     document.addEventListener('keydown', onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // Lenis (home) intercepta la rueda a nivel documento: pausarlo mientras el
+    // panel esté abierto para que solo deslice el QuickView, no la página.
+    const lenis = (window as unknown as { __descentLenis?: { stop: () => void; start: () => void } }).__descentLenis;
+    lenis?.stop();
     const t = setTimeout(() => panelRef.current?.focus(), 80);
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev; clearTimeout(t); };
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+      lenis?.start();
+      clearTimeout(t);
+    };
   }, [property, onClose]);
 
   return (
@@ -81,6 +90,7 @@ export function QuickView({ property, onClose }: { property: Property | null; on
             ref={panelRef}
             role="dialog" aria-modal="true" aria-label={`${property.address} — quick view`}
             tabIndex={-1}
+            data-lenis-prevent
             onClick={(e) => e.stopPropagation()}
             initial={isMobile ? { y: '100%' } : { x: '100%' }}
             animate={isMobile ? { y: 0 } : { x: 0 }}
