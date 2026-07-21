@@ -85,9 +85,10 @@
 .st-pill--solid:hover { background: #3a1e3b; }
 
 /* ── mask reveal (titulares) ────────────────────────────────────────────── */
-.st-line { display: block; overflow: hidden; }
+/* padding compensado: la ventana de clip cubre descendentes e itálicas sin mover el layout */
+.st-line { display: block; overflow: hidden; padding: 0.09em 0.08em 0.19em; margin: -0.09em -0.08em -0.19em; }
 .st-line > span {
-  display: block; transform: translateY(112%);
+  display: block; transform: translateY(135%);
   transition: transform 760ms var(--ease-o);
   transition-delay: calc(var(--i, 0) * 90ms);
 }
