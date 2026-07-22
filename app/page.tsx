@@ -1,4 +1,5 @@
 import HeroDescent from '@/components/descent/hero-descent';
+import GateRelease from '@/components/descent/gate-release';
 import Flagship from '@/components/descent/flagship';
 import ValueProps from '@/components/studio/value-props';
 import Featured from '@/components/studio/featured';
@@ -42,6 +43,8 @@ export default function Home() {
       <Curtain />
       {/* 1 · EL DESCENSO — intocable en su mecánica, overlay v2 */}
       <HeroDescent />
+      {/* libera el gate si la home monta ya scrolleada (volver desde una propiedad) */}
+      <GateRelease />
 
       {/* 2 · Value props */}
       <ValueProps />

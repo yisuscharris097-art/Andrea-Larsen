@@ -1,14 +1,14 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    STUDIO — design system del rediseño premium (referencias: Suffo + editorial
    claro + Nestoria). Tokens, tipografía y componentes compartidos.
-   Paleta: off-white #F4F4F2 · dark #0D0D0D · lima #E3C173 (solo sobre oscuro).
+   Paleta: off-white #F4F4F2 · dark #0D0D0D · plum #4E2A4F · mist #AEB9BE.
    ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
   --st-bg: #f4f4f2;
   --st-dark: #0d0d0d;
   --st-card: #141414;
-  --st-lime: #e3c173;
+  --st-lime: #f4f4f2; /* acento sobre oscuro: off-white (antes champagne) */
   --st-ink: #1a1a1a;
   --st-grey: #8a8a8a;
   --st-grey-dark: #a0a0a0;
@@ -41,7 +41,7 @@
 .st-num { font-variant-numeric: tabular-nums; }
 .st-it { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
 .st-dash { color: var(--st-plum); }
-.st-dark-s .st-dash { color: #E3C173; }
+.st-dark-s .st-dash { color: #F4F4F2; }
 
 
 .st-eyebrow {

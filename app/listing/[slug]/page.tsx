@@ -92,7 +92,7 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1.4rem' }}>
           {p.features.map((f) => (
             <span key={f} style={{ border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.45em 1em', fontSize: '0.78rem', background: '#fff' }}>
-              <span style={{ color: '#8C6D2F' }}>✓</span> {f}
+              <span style={{ color: '#4E2A4F' }}>✓</span> {f}
             </span>
           ))}
         </div>

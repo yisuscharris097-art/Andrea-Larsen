@@ -13,7 +13,6 @@ import Magnetic from './magnetic';
 
 const INK = '#1A1714';
 const OXBLOOD = '#0d0d0d';
-const GOLD = '#E3C173';
 const PAPER = '#FAF9F7';
 const FONT = "var(--font-grotesk), 'Archivo', system-ui, sans-serif";
 const SERIF = "var(--font-serif), 'Instrument Serif', Georgia, serif";

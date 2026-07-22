@@ -173,7 +173,7 @@ export function QuickView({ property, onClose }: { property: Property | null; on
               <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', marginBottom: '1.4rem' }}>
                 {property.features.map((f) => (
                   <span key={f} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', background: '#fff', borderRadius: 999, padding: '0.5em 1em', fontSize: '0.8rem', border: '1px solid var(--st-line)' }}>
-                    <span style={{ color: '#8C6D2F' }}>✓</span> {f}
+                    <span style={{ color: '#4E2A4F' }}>✓</span> {f}
                   </span>
                 ))}
               </div>
@@ -182,7 +182,7 @@ export function QuickView({ property, onClose }: { property: Property | null; on
               <p style={{ color: '#555', lineHeight: 1.6, maxWidth: '62ch', margin: 0, display: '-webkit-box', WebkitLineClamp: more ? undefined : 3, WebkitBoxOrient: 'vertical', overflow: more ? 'visible' : 'hidden' }}>
                 {property.description}
               </p>
-              <button onClick={() => setMore(!more)} style={{ background: 'none', border: 0, padding: 0, marginTop: 6, color: '#8C6D2F', fontWeight: 500, cursor: 'pointer', fontSize: '0.86rem' }}>
+              <button onClick={() => setMore(!more)} style={{ background: 'none', border: 0, padding: 0, marginTop: 6, color: '#4E2A4F', fontWeight: 500, cursor: 'pointer', fontSize: '0.86rem' }}>
                 {more ? 'Read less' : 'Read more'}
               </button>
 

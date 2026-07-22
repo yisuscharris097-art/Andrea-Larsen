@@ -123,7 +123,7 @@ export default function SellPage() {
               <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', maxWidth: 760 }}>
                 {MARKETING.map((m) => (
                   <span key={m} style={{ border: '1px solid var(--st-line)', borderRadius: 999, padding: '0.55em 1.2em', fontSize: '0.85rem', background: '#fff' }}>
-                    <span style={{ color: '#8C6D2F' }}>✓</span> {m}
+                    <span style={{ color: '#4E2A4F' }}>✓</span> {m}
                   </span>
                 ))}
               </div>

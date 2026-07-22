@@ -115,7 +115,7 @@ export default function PropertiesPage() {
           <div>
             <div className="st-eyebrow" style={{ marginBottom: '0.8rem' }}>Max price — <b style={{ color: 'var(--st-ink)' }}>${(price / 1e6).toFixed(2)}M</b></div>
             <input type="range" min={2000000} max={MAX_PRICE} step={100000} value={price} onChange={(e) => setPrice(+e.target.value)}
-              aria-label="Maximum price" style={{ width: '100%', accentColor: '#8C6D2F' }} />
+              aria-label="Maximum price" style={{ width: '100%', accentColor: '#4E2A4F' }} />
           </div>
           <div>
             <div className="st-eyebrow" style={{ marginBottom: '0.8rem' }}>Rooms</div>
@@ -129,7 +129,7 @@ export default function PropertiesPage() {
             </div>
           </div>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', cursor: 'pointer' }}>
-            <input type="checkbox" checked={forSaleOnly} onChange={(e) => setForSaleOnly(e.target.checked)} style={{ accentColor: '#8C6D2F', width: 16, height: 16 }} />
+            <input type="checkbox" checked={forSaleOnly} onChange={(e) => setForSaleOnly(e.target.checked)} style={{ accentColor: '#4E2A4F', width: 16, height: 16 }} />
             Active listings only
           </label>
           <p style={{ fontSize: '0.72rem', color: 'var(--st-grey)', lineHeight: 1.5 }}>
@@ -156,7 +156,7 @@ export default function PropertiesPage() {
             ))}
             {chips.length > 0 && (
               <button onClick={() => { setTypes([]); setPrice(MAX_PRICE); setRooms(0); setForSaleOnly(false); }}
-                style={{ background: 'none', border: 0, color: '#8C6D2F', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 500 }}>
+                style={{ background: 'none', border: 0, color: '#4E2A4F', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 500 }}>
                 Clear all
               </button>
             )}
@@ -196,7 +196,7 @@ export default function PropertiesPage() {
                   </motion.div>
                   <div>
                     <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--st-grey)', display: 'flex', alignItems: 'center', gap: '0.5em' }}>
-                      <span aria-hidden style={{ width: 8, height: 8, borderRadius: 99, background: p.status === 'For Sale' ? '#3E7A44' : '#B8860B' }} />
+                      <span aria-hidden style={{ width: 8, height: 8, borderRadius: 99, background: p.status === 'For Sale' ? '#3E7A44' : '#7d7d79' }} />
                       {p.status} · {p.type}</div>
                     <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500, fontSize: '1.15rem', letterSpacing: '-0.02em', margin: '0.25rem 0' }}>{p.address}</div>
                     <div style={{ fontSize: '0.84rem', color: 'var(--st-grey)' }}>{p.city}, {p.state} {p.zip}</div>
