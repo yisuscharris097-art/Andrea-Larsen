@@ -381,3 +381,40 @@
 
 /* ── mapa en la home ───────────────────────────────────────────────────── */
 .home-map .pmap-canvas { height: clamp(380px, 54vh, 560px); }
+
+/* ── flagship (marco blanco + slider crossfade + título fijo) ──────────── */
+.fs-section { background: #FAF9F7; padding: clamp(4rem, 9vh, 7rem) clamp(1.25rem, 6vw, 7rem); }
+.fs-eyebrow { text-align: center; font-family: var(--grotesk); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #0d0d0d; margin-bottom: clamp(1.6rem, 4vh, 2.6rem); }
+.fs-frame { position: relative; max-width: 1400px; margin: 0 auto; height: clamp(480px, 80vh, 860px); overflow: hidden; background: #e2e2de; }
+.fs-par { position: absolute; left: 0; right: 0; top: -16%; height: 132%; will-change: transform; }
+.fs-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 800ms var(--ease); }
+.fs-slide.on { opacity: 1; }
+.fs-grad { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 55%, rgba(0,0,0,0.2) 100%); pointer-events: none; }
+.fs-title { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; pointer-events: none; padding: 0 1rem; }
+.fs-word { font-family: var(--grotesk); font-weight: 500; font-stretch: 115%; font-size: clamp(2.6rem, 7.6vw, 6.8rem); line-height: 0.94; letter-spacing: -0.015em; text-transform: uppercase; color: #FCFAF6; text-shadow: 0 2px 28px rgba(10,8,6,0.45); }
+.fs-specs { margin-top: 1.1rem; font-family: var(--grotesk); font-weight: 300; font-size: 0.875rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.8); text-shadow: 0 1px 14px rgba(10,8,6,0.5); }
+.fs-specs .dot { font-size: 0.5em; vertical-align: 0.22em; padding: 0 0.35em; }
+.fs-badge { position: absolute; top: 18px; left: 18px; background: rgba(255,255,255,0.85); color: #1A1714; font-family: var(--grotesk); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em; border-radius: 999px; padding: 0.55em 1.2em; }
+.fs-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.55); background: rgba(20,16,12,0.28); backdrop-filter: blur(6px); color: #fff; font-size: 1.05rem; cursor: pointer; opacity: 0; transition: opacity 300ms var(--ease), background 250ms var(--ease); z-index: 3; }
+.fs-prev { left: 18px; } .fs-next { right: 18px; }
+.fs-frame:hover .fs-arrow, .fs-arrow:focus-visible { opacity: 1; }
+.fs-arrow:hover { background: rgba(20,16,12,0.55); }
+.fs-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.fs-corner { position: absolute; right: 18px; bottom: 18px; display: grid; justify-items: end; gap: 0.7rem; z-index: 3; }
+.fs-dots { display: flex; gap: 7px; }
+.fs-dots button { width: 7px; height: 7px; border-radius: 999px; border: 0; padding: 0; background: rgba(255,255,255,0.42); cursor: pointer; transition: background 250ms var(--ease), transform 250ms var(--ease); }
+.fs-dots button.on { background: #fff; transform: scale(1.25); }
+.fs-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.fs-cta { display: inline-block; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.74rem; color: #fff; background: transparent; border: 1px solid #fff; padding: 0.95rem 1.9rem; border-radius: 999px; text-decoration: none; transition: background 250ms var(--ease), color 250ms var(--ease); }
+.fs-cta:hover, .fs-cta:focus-visible { background: #fff; color: #1A1714; }
+.fs-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (hover: none) { .fs-arrow { opacity: 1; } }
+@media (max-width: 760px) {
+  .fs-frame { height: clamp(380px, 62vh, 560px); }
+  .fs-arrow { width: 40px; height: 40px; }
+  .fs-cta { padding: 0.8rem 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fs-slide { transition: none; }
+  .fs-par { transform: none !important; }
+}

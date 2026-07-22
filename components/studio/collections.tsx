@@ -71,7 +71,7 @@ export default function Collections() {
               >
                 <span className="r-name">{p.address}</span>
                 <span className="r-loc">{p.city}, {p.state} · {p.status}</span>
-                <span className="r-size">{p.sqft ? `${p.sqft.toLocaleString('en-US')} Sq Ft` : p.beds ? `${p.beds} BD / ${p.baths} BA` : `${p.lotAcres} Acres`}</span>
+                <span className="r-size">{p.sqft ? `${p.sqft.toLocaleString('en-US')} Sq Ft` : p.beds ? `${p.beds} BD / ${p.baths} BA` : p.lotAcres ? `${p.lotAcres} Acres` : p.type === 'Land' ? 'Land' : 'Multi-unit'}</span>
               </Link>
             ))}
           </div>
