@@ -14,9 +14,13 @@ export function Reveal({ children, className = '', as: Tag = 'div' }: { children
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('in'); return; }
+    // umbral adaptativo: un elemento más alto que el viewport nunca alcanza un
+    // ratio fijo (p.ej. el grid de listings en móvil, ~7 pantallas) y quedaría
+    // invisible; se escala para que siempre pueda dispararse.
+    const threshold = Math.min(0.18, (window.innerHeight * 0.2) / Math.max(el.offsetHeight, 1));
     const io = new IntersectionObserver(
       (es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
-      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
+      { threshold, rootMargin: '0px 0px -8% 0px' },
     );
     io.observe(el);
     return () => io.disconnect();
