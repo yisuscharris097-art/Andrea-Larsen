@@ -107,14 +107,14 @@ export default function Flagship() {
             pointerEvents: info > 0.6 ? 'auto' : 'none',
           }}
         >
-          <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: '#E3C173' }}>
+          <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: '.7rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'rgba(252,250,246,.9)' }}>
             71 Morningside Road · Ocean City, NJ · The Jersey Shore
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '1rem 2.4rem', marginTop: '.8rem' }}>
             <div style={{ fontFamily: FONT, fontWeight: 500, fontStretch: '115%', fontSize: 'clamp(2.6rem, 7vw, 6rem)', lineHeight: 0.95, letterSpacing: '-0.02em', color: '#FCFAF6', textShadow: '0 2px 34px rgba(10,8,6,.5)' }}>
               $5,995,000
             </div>
-            <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)', color: '#F0E7D6', textShadow: '0 1px 20px rgba(10,8,6,.6)' }}>
+            <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(1.05rem, 2.2vw, 1.5rem)', color: 'rgba(252,250,246,.88)', textShadow: '0 1px 20px rgba(10,8,6,.6)' }}>
               6 beds · 5 baths · minutes from the beach
             </div>
           </div>
