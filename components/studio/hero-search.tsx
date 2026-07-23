@@ -10,6 +10,50 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { properties } from '@/lib/properties';
 import { neighborhoods, listingsIn } from '@/lib/neighborhoods';
 
+/** Dropdown custom (blanco, chevron clickeable) — reemplaza al <select> nativo
+ *  cuyo despliegue tomaba el estilo del sistema y cuya flecha no abría nada. */
+function Dropdown({ label, value, options, onChange }: {
+  label: string;
+  value: string;
+  options: { label: string; v: string }[];
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const current = options.find((o) => o.v === value) || options[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [open]);
+
+  return (
+    <div className="hs-sel" ref={ref}>
+      <span className="hs-lab">{label}</span>
+      <button type="button" className={`hs-selrow${open ? ' open' : ''}`} onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox" aria-expanded={open} aria-label={`${label}: ${current.label}`}>
+        <span className="hs-selval">{current.label}</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="hs-chev">
+          <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {open && (
+        <div className="hs-menu" role="listbox" aria-label={label}>
+          {options.map((o) => (
+            <button key={o.v} type="button" role="option" aria-selected={o.v === value}
+              className={`hs-mopt${o.v === value ? ' on' : ''}`}
+              onClick={() => { onChange(o.v); setOpen(false); }}>
+              {o.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const PRICE_MAX = [
   { label: 'Any price', v: 0 },
   { label: 'Up to $2M', v: 2000000 },
@@ -18,18 +62,14 @@ const PRICE_MAX = [
   { label: 'Up to $6M', v: 6000000 },
 ];
 const TYPES = Array.from(new Set(properties.map((p) => p.type)));
+const PRICE_OPTS = PRICE_MAX.map((p) => ({ label: p.label, v: String(p.v) }));
+const TYPE_OPTS = [{ label: 'Any type', v: '' }, ...TYPES.map((t) => ({ label: t, v: t }))];
 const CHIPS: { label: string; p: Record<string, string> }[] = [
   { label: 'Under $2M', p: { maxPrice: '2000000' } },
   { label: 'Ocean City', p: { city: 'Ocean City' } },
   { label: 'Houses', p: { type: 'House' } },
   { label: '2,500+ sq ft', p: { minSqft: '2500' } },
 ];
-
-const chevron = (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden style={{ flexShrink: 0 }}>
-    <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 type Sug =
   | { kind: 'area'; label: string; sub: string; count: number; city: string }
@@ -171,25 +211,8 @@ export default function HeroSearch() {
                     </div>
                   )}
                 </div>
-                <label className="hs-sel">
-                  <span className="hs-lab">Price</span>
-                  <span className="hs-selrow">
-                    <select value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} aria-label="Maximum price">
-                      {PRICE_MAX.map((p) => <option key={p.label} value={p.v}>{p.label}</option>)}
-                    </select>
-                    {chevron}
-                  </span>
-                </label>
-                <label className="hs-sel">
-                  <span className="hs-lab">Type</span>
-                  <span className="hs-selrow">
-                    <select value={type} onChange={(e) => setType(e.target.value)} aria-label="Property type">
-                      <option value="">Any type</option>
-                      {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                    {chevron}
-                  </span>
-                </label>
+                <Dropdown label="Price" value={String(maxPrice)} options={PRICE_OPTS} onChange={(v) => setMaxPrice(Number(v))} />
+                <Dropdown label="Type" value={type} options={TYPE_OPTS} onChange={setType} />
                 <button className="hs-go" onClick={go}>
                   {hasFilter ? `See ${count} home${count === 1 ? '' : 's'}` : 'Search homes'} →
                 </button>
