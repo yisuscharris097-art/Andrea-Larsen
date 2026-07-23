@@ -421,7 +421,7 @@
 
 /* ── hero search (buscador de lujo) ────────────────────────────────────── */
 .hs-band { padding: 0 clamp(1.25rem, 5vw, 6.5rem); position: relative; z-index: 6; }
-.hs-card { max-width: 980px; margin: 0 auto; transform: translateY(-46%); background: #fff; border: 1px solid var(--st-line); border-radius: 16px; box-shadow: 0 34px 80px -34px rgba(10,10,10,0.4); padding: 0.6rem 0.7rem 0.8rem; }
+.hs-card { max-width: 980px; margin: 0 auto; transform: translateY(-40px); background: #fff; border: 1px solid var(--st-line); border-radius: 16px; box-shadow: 0 34px 80px -34px rgba(10,10,10,0.4); padding: 0.6rem 0.7rem 0.8rem; }
 .hs-tabs { display: flex; gap: 0.3rem; padding: 0.2rem 0.2rem 0.5rem; }
 .hs-tabs button { border: 0; background: none; font-family: var(--body); font-size: 0.82rem; font-weight: 600; color: var(--st-grey); padding: 0.5em 0.9em; border-radius: 8px; cursor: pointer; transition: background 200ms var(--ease), color 200ms var(--ease); }
 .hs-tabs button.on { background: var(--st-plum); color: #fff; }
