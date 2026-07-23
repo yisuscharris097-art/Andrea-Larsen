@@ -5,7 +5,9 @@ import ValueProps from '@/components/studio/value-props';
 import Featured from '@/components/studio/featured';
 import Manifesto from '@/components/studio/manifesto';
 import Stats from '@/components/studio/stats';
-import Collections from '@/components/studio/collections';
+import TrackRecord from '@/components/studio/track-record';
+import HeroSearch from '@/components/studio/hero-search';
+import ValuationCta from '@/components/studio/valuation-cta';
 import Mist from '@/components/studio/mist';
 import MapSection from '@/components/studio/map-section';
 import AgentEditorial from '@/components/studio/agent-editorial';
@@ -46,6 +48,9 @@ export default function Home() {
       {/* libera el gate si la home monta ya scrolleada (volver desde una propiedad) */}
       <GateRelease />
 
+      {/* NUEVA · Banda de búsqueda — el 70% llega a buscar, no a agendar */}
+      <HeroSearch />
+
       {/* 2 · Value props */}
       <ValueProps />
 
@@ -57,6 +62,9 @@ export default function Home() {
 
       {/* NUEVA · Just Sold (se muestra al cargar contenido real) */}
       <JustSold />
+
+      {/* NUEVA · Track record — prueba social por números (cifras SAMPLE) */}
+      <TrackRecord />
 
       <Marquee />
 
@@ -78,13 +86,13 @@ export default function Home() {
       {/* NUEVA · Press & Affiliations */}
       <PressAwards />
 
-      {/* 7 · Collections — índice con polaroid hover */}
-      <Collections />
+      {/* NUEVA · Valuación gratis (captación de sellers) */}
+      <ValuationCta />
 
       {/* 8 · Respiro gris-azulado + búsqueda */}
       <Mist />
 
-      {/* 9 · Mapa estilizado */}
+      {/* 9 · Mapa + The Collection fusionada (índice de inventario) */}
       <MapSection />
 
       {/* 10 · La agente */}

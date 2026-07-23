@@ -23,39 +23,83 @@ const TYPES: { t: PropertyType; icon: string }[] = [
 ];
 const ROOMS = [1, 2, 3, 4];
 const MAX_PRICE = 6000000;
+const SQFT_STEPS = [0, 1500, 2500, 3500];
+const CITIES = Array.from(new Set(properties.map((p) => p.city))).sort();
 
 export default function PropertiesPage() {
   const qv = useQuickView();
   const [types, setTypes] = useState<PropertyType[]>([]);
   const [price, setPrice] = useState(MAX_PRICE);
   const [rooms, setRooms] = useState(0);
+  const [minSqft, setMinSqft] = useState(0);
+  const [city, setCity] = useState('');
   const [forSaleOnly, setForSaleOnly] = useState(false);
   const [mapView, setMapView] = useState(false);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const [sort, setSort] = useState<'price' | 'newest' | 'sqft'>('price');
+  const [saved, setSaved] = useState(false);
+  const ready = useRef(false);
 
+  // leer filtros de la URL al montar (viene del buscador del hero / links compartidos)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('property');
     if (slug) { const p = bySlug(slug); if (p) qv.show(p); }
+    const t = params.get('type');
+    if (t) setTypes(t.split(',').filter(Boolean) as PropertyType[]);
+    const mp = params.get('maxPrice');
+    if (mp) setPrice(Math.min(MAX_PRICE, Number(mp)));
+    const ms = params.get('minSqft');
+    if (ms) setMinSqft(Number(ms));
+    const c = params.get('city');
+    if (c) setCity(c);
     if (params.get('view') === 'map') setMapView(true);
+    else if (!params.get('view') && window.matchMedia('(min-width: 1024px)').matches) setMapView(true);
+    ready.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ?view=map compartible en la URL
+  // sincronizar filtros → URL (compartible), preservando ?property
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (mapView) params.set('view', 'map'); else params.delete('view');
+    if (!ready.current) return;
+    const params = new URLSearchParams();
+    const prop = new URLSearchParams(window.location.search).get('property');
+    if (prop) params.set('property', prop);
+    if (city) params.set('city', city);
+    if (price < MAX_PRICE) params.set('maxPrice', String(price));
+    if (minSqft) params.set('minSqft', String(minSqft));
+    if (types.length) params.set('type', types.join(','));
+    if (mapView) params.set('view', 'map');
     const qs = params.toString();
     window.history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
-  }, [mapView]);
+  }, [city, price, minSqft, types, mapView]);
 
   const results = useMemo(() => [...properties].sort((a, b) => sort === 'price' ? b.price - a.price : sort === 'sqft' ? (b.sqft || 0) - (a.sqft || 0) : Number(b.mlsRef) - Number(a.mlsRef)).filter((p) =>
     (types.length === 0 || types.includes(p.type)) &&
     p.price <= price &&
     (rooms === 0 || (p.beds || 0) >= rooms) &&
+    (minSqft === 0 || (p.sqft || 0) >= minSqft) &&
+    (!city || p.city === city) &&
     (!forSaleOnly || p.status === 'For Sale')
-  ), [types, price, rooms, forSaleOnly, sort]);
+  ), [types, price, rooms, minSqft, city, forSaleOnly, sort]);
+
+  // guardar búsqueda por email (lead capture; mailto hasta que haya CRM/alertas)
+  const saveSearch = () => {
+    const parts = [
+      city || 'All of the Jersey Shore',
+      types.length ? types.join(', ') : 'any type',
+      price < MAX_PRICE ? `up to $${(price / 1e6).toFixed(1)}M` : 'any price',
+      rooms ? `${rooms}+ beds` : null,
+      minSqft ? `${minSqft.toLocaleString('en-US')}+ sq ft` : null,
+      forSaleOnly ? 'active only' : null,
+    ].filter(Boolean).join(' · ');
+    const subject = encodeURIComponent('Save my search — notify me of new matches');
+    const body = encodeURIComponent(
+      `Hi Andrea — please save this search and email me when new listings match:\n\n${parts}\n\nLink: ${window.location.href}\n\nMy name:\nMy email:`,
+    );
+    window.location.href = `mailto:andrea@lovelivingcoast2coast.com?subject=${subject}&body=${body}`;
+    setSaved(true);
+  };
 
   // FLIP: las cards se REORDENAN físicamente al filtrar/ordenar
   const cardRefs = useRef(new Map<string, HTMLElement>());
@@ -80,9 +124,11 @@ export default function PropertiesPage() {
   }, [results]);
 
   const chips: { label: string; clear: () => void }[] = [
+    ...(city ? [{ label: city, clear: () => setCity('') }] : []),
     ...types.map((t) => ({ label: t, clear: () => setTypes(types.filter((x) => x !== t)) })),
     ...(price < MAX_PRICE ? [{ label: `≤ $${(price / 1e6).toFixed(1)}M`, clear: () => setPrice(MAX_PRICE) }] : []),
     ...(rooms > 0 ? [{ label: `${rooms}+ rooms`, clear: () => setRooms(0) }] : []),
+    ...(minSqft > 0 ? [{ label: `${minSqft.toLocaleString('en-US')}+ sq ft`, clear: () => setMinSqft(0) }] : []),
     ...(forSaleOnly ? [{ label: 'For Sale', clear: () => setForSaleOnly(false) }] : []),
   ];
 
@@ -101,6 +147,14 @@ export default function PropertiesPage() {
       <div className="props-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(230px, 290px) minmax(0, 1fr)', gap: '2.4rem', padding: '1rem clamp(1.25rem, 4vw, 4rem) 4rem', alignItems: 'start' }}>
         {/* ── filtros ── */}
         <aside style={{ position: 'sticky', top: '1.2rem', display: 'grid', gap: '1.8rem' }}>
+          <div>
+            <div className="st-eyebrow" style={{ marginBottom: '0.8rem' }}>Location</div>
+            <select value={city} onChange={(e) => setCity(e.target.value)} aria-label="Location"
+              style={{ width: '100%', border: '1px solid var(--st-line)', borderRadius: 12, padding: '0.7em 1em', fontFamily: 'var(--body)', fontSize: '0.9rem', background: '#fff', cursor: 'pointer' }}>
+              <option value="">All of the Jersey Shore</option>
+              {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
           <div>
             <div className="st-eyebrow" style={{ marginBottom: '0.8rem' }}>Property type</div>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -128,12 +182,29 @@ export default function PropertiesPage() {
               ))}
             </div>
           </div>
+          <div>
+            <div className="st-eyebrow" style={{ marginBottom: '0.8rem' }}>Minimum size</div>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {SQFT_STEPS.map((s) => (
+                <button key={s} onClick={() => setMinSqft(s)}
+                  className="st-pill st-pill--dark" style={minSqft === s ? { background: 'var(--st-ink)', color: '#fff' } : {}}>
+                  {s === 0 ? 'Any' : `${(s / 1000).toFixed(1).replace('.0', '')}k+`}
+                </button>
+              ))}
+            </div>
+          </div>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', cursor: 'pointer' }}>
             <input type="checkbox" checked={forSaleOnly} onChange={(e) => setForSaleOnly(e.target.checked)} style={{ accentColor: '#4E2A4F', width: 16, height: 16 }} />
             Active listings only
           </label>
-          <p style={{ fontSize: '0.72rem', color: 'var(--st-grey)', lineHeight: 1.5 }}>
-            ◌ Garage · Pool · Furnished filters activate when the IDX feed connects.
+
+          {/* guardar búsqueda — lead capture #1 de un sitio de realtor */}
+          <button onClick={saveSearch} className="st-pill st-pill--solid" style={{ border: 0, justifyContent: 'center', width: '100%', padding: '0.9em 1.2em' }}>
+            {saved ? '✓ Check your email app' : '🔔 Save search & get alerts'}
+          </button>
+          <p style={{ fontSize: '0.72rem', color: 'var(--st-grey)', lineHeight: 1.5, marginTop: '-0.6rem' }}>
+            Andrea emails you when new listings match. Waterfront · pool · year built · HOA filters
+            activate when the IDX feed connects.
           </p>
         </aside>
 

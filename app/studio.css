@@ -418,3 +418,40 @@
   .fs-slide { transition: none; }
   .fs-par { transform: none !important; }
 }
+
+/* ── hero search band ──────────────────────────────────────────────────── */
+.hs-band { background: var(--st-bg); padding: 0 clamp(1.25rem, 5vw, 6.5rem); margin-top: -2px; position: relative; z-index: 5; }
+.hs-form { max-width: 1420px; margin: 0 auto; transform: translateY(-50%); background: #fff; border: 1px solid var(--st-line); border-radius: 18px; box-shadow: 0 30px 70px -30px rgba(10,10,10,0.35); display: flex; align-items: stretch; gap: 0; padding: 0.5rem; flex-wrap: wrap; }
+.hs-field { flex: 1 1 180px; display: grid; gap: 3px; padding: 0.7rem 1.1rem; min-width: 0; }
+.hs-lab { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--st-grey); font-weight: 600; }
+.hs-field select { border: 0; background: transparent; font-family: var(--grotesk); font-weight: 500; font-size: 1rem; color: var(--st-ink); cursor: pointer; outline: none; width: 100%; padding: 0; letter-spacing: -0.01em; appearance: none; }
+.hs-field select:focus-visible { outline: 2px solid var(--st-plum); outline-offset: 4px; border-radius: 4px; }
+.hs-sep { width: 1px; background: var(--st-line); margin: 0.7rem 0; align-self: stretch; }
+.hs-go { flex: 0 0 auto; margin: 0.35rem; border: 0; border-radius: 14px; background: var(--st-plum); color: #fff; font-family: var(--body); font-weight: 600; font-size: 0.9rem; padding: 0 1.6rem; cursor: pointer; white-space: nowrap; transition: background 250ms var(--ease); }
+.hs-go:hover { background: #3a1e3b; }
+.hs-go:focus-visible { outline: 2px solid var(--st-plum); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .hs-form { transform: translateY(-24px); flex-direction: column; padding: 0.4rem; }
+  .hs-sep { display: none; }
+  .hs-field { padding: 0.7rem 0.9rem; }
+  .hs-go { margin: 0.5rem 0.9rem 0.7rem; padding: 0.95rem; }
+}
+
+/* ── valuation CTA (home) ──────────────────────────────────────────────── */
+.vcta-card { background: var(--st-plum); border-radius: 26px; padding: clamp(2.4rem, 5vw, 4rem); position: relative; overflow: hidden; }
+.vcta-card::after { content: ''; position: absolute; right: -10%; top: -40%; width: 55%; height: 180%; background: radial-gradient(closest-side, rgba(255,255,255,0.08), transparent); pointer-events: none; }
+.vcta-form { display: flex; gap: 0.7rem; margin-top: 1.8rem; max-width: 560px; flex-wrap: wrap; }
+.vcta-form input { flex: 1 1 240px; min-width: 0; border: 1px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.08); border-radius: 14px; padding: 1em 1.2em; font-family: var(--body); font-size: 0.95rem; color: #fff; outline: none; }
+.vcta-form input::placeholder { color: rgba(255,255,255,0.55); }
+.vcta-form input:focus-visible { border-color: #fff; background: rgba(255,255,255,0.14); }
+.vcta-form button { flex: 0 0 auto; border: 0; border-radius: 14px; background: #fff; color: var(--st-plum); font-family: var(--body); font-weight: 600; font-size: 0.9rem; padding: 0 1.7rem; cursor: pointer; transition: transform 200ms var(--ease-o); }
+.vcta-form button:hover { transform: translateY(-1px); }
+.vcta-form button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* ── home collection list (fusionada en el mapa) ───────────────────────── */
+.hm-list { display: grid; gap: 0.1rem; margin-top: 1.6rem; border-top: 1px solid var(--st-line); }
+.hm-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; padding: 0.85rem 0.2rem; border-bottom: 1px solid var(--st-line); text-decoration: none; color: var(--st-ink); transition: padding-left 250ms var(--ease), background 250ms var(--ease); }
+.hm-row:hover { padding-left: 0.7rem; background: #EDEFEF; }
+.hm-row .a { font-family: var(--grotesk); font-weight: 500; font-size: 1.02rem; letter-spacing: -0.02em; }
+.hm-row .c { font-size: 0.78rem; color: var(--st-grey); }
+.hm-row .s { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: 0.95rem; }

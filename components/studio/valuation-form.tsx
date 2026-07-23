@@ -5,7 +5,7 @@
  * Mismo patrón que ContactForm (mailto hasta que haya CRM/endpoint).
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { agent } from '@/components/agent-data';
 import { Reveal, Line, Fade } from './ui';
 
@@ -21,6 +21,13 @@ const labelCss: React.CSSProperties = {
 
 export default function ValuationForm() {
   const [sent, setSent] = useState(false);
+  const [address, setAddress] = useState('');
+
+  // prefill desde ?address (viene del bloque de valuación de la home)
+  useEffect(() => {
+    const a = new URLSearchParams(window.location.search).get('address');
+    if (a) setAddress(a);
+  }, []);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +83,7 @@ export default function ValuationForm() {
             </div>
             <div>
               <label htmlFor="vf-address" style={labelCss}>Property address</label>
-              <input id="vf-address" name="address" required placeholder="123 Ocean Ave, Ocean City, NJ" style={field} />
+              <input id="vf-address" name="address" required value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Ocean Ave, Ocean City, NJ" style={field} />
             </div>
             <div className="st-contact-two" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
               <div>
