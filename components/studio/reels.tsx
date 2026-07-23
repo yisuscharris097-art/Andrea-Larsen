@@ -66,7 +66,7 @@ export default function Reels() {
       <div className="reels-head">
         <div>
           <span className="reels-eyebrow">● On the feed</span>
-          <h2 className="reels-title">See the homes<br />in motion.</h2>
+          <h2 className="reels-title">See the homes<br />in <span className="st-it">motion.</span></h2>
         </div>
         <p className="reels-sub">
           The way Andrea markets a listing — full-screen, cinematic, everywhere your buyers already scroll.
