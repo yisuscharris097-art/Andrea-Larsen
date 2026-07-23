@@ -455,3 +455,15 @@
 .hm-row .a { font-family: var(--grotesk); font-weight: 500; font-size: 1.02rem; letter-spacing: -0.02em; }
 .hm-row .c { font-size: 0.78rem; color: var(--st-grey); }
 .hm-row .s { font-family: var(--grotesk); font-weight: 500; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+
+/* ── map section: mapa sticky + colección scrolleable ──────────────────── */
+.mc-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 3.5rem; align-items: start; }
+.mc-mapcol { position: sticky; top: clamp(1rem, 5vh, 2.2rem); }
+.mc-map .pmap-canvas { height: clamp(440px, 78vh, 720px); }
+.mc-title { font-family: var(--grotesk); font-weight: 500; font-stretch: 115%; letter-spacing: -0.03em; line-height: 1.0; color: var(--st-plum); font-size: clamp(1.9rem, 3.4vw, 3rem); }
+.hm-row.hot { padding-left: 0.7rem; background: #EDEFEF; }
+@media (max-width: 900px) {
+  .mc-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .mc-mapcol { position: static; }
+  .mc-map .pmap-canvas { height: 52vh; }
+}
