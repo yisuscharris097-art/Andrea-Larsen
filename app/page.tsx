@@ -6,6 +6,7 @@ import Featured from '@/components/studio/featured';
 import Manifesto from '@/components/studio/manifesto';
 import Stats from '@/components/studio/stats';
 import TrackRecord from '@/components/studio/track-record';
+import Reels from '@/components/studio/reels';
 import HeroSearch from '@/components/studio/hero-search';
 import ValuationCta from '@/components/studio/valuation-cta';
 import Mist from '@/components/studio/mist';
@@ -65,6 +66,9 @@ export default function Home() {
 
       {/* NUEVA · Track record — prueba social por números (cifras SAMPLE) */}
       <TrackRecord />
+
+      {/* NUEVA · Reels — bloque negro, carrusel vertical, CTA al vendedor */}
+      <Reels />
 
       <Marquee />
 
