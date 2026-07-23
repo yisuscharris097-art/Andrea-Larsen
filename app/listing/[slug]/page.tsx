@@ -148,7 +148,7 @@ export default function ListingPage({ params }: { params: { slug: string } }) {
         {/* Andrea sticky */}
         <aside style={{ position: 'sticky', top: '1.4rem', border: '1px solid var(--st-line)', borderRadius: 20, padding: '1.4rem', background: '#fff' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
-            <Image src={agent.photo} alt={agent.name} width={56} height={56} style={{ borderRadius: 999, objectFit: 'cover', width: 56, height: 56 }} />
+            <Image src={agent.avatar} alt={agent.name} width={56} height={56} style={{ borderRadius: 999, objectFit: 'cover', width: 56, height: 56 }} />
             <div>
               <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500 }}>{agent.name}</div>
               <div style={{ fontSize: '0.76rem', color: 'var(--st-grey)' }}>{agent.titles[0]} · {agent.rank}</div>

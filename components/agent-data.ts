@@ -10,9 +10,11 @@ export const agent = {
   brokerage: 'Berkshire Hathaway HomeServices Fox & Roach',
   bio: 'As a luxury realtor with a career spanning over 27 years in sales, marketing, and real estate, I have honed my skills to create unparalleled real estate experiences for clients — from savvy investors to those seeking their dream homes. I excel in selling homes thanks to meticulous attention to detail, clear communication, and strong negotiation. Coming from a family of top-producing agents and investors, I inherited a deep understanding of the market. Family and faith are my top priorities, and I am among the top one percent in my state.',
 
-  // TODO: reemplazar por '/andrea-hero.jpg' cuando el cliente la suba.
+  // Foto oficial de la sesión profesional (070A3718r) — jul 2026.
   photo: '/andrea-perfil.jpg',
-  photoIsPlaceholder: true,
+  // Crop cuadrado de la cara para avatares circulares pequeños.
+  avatar: '/andrea-avatar.jpg',
+  photoIsPlaceholder: false,
 
   office: {
     name: 'Berkshire Hathaway HomeServices Fox & Roach, REALTORS®',

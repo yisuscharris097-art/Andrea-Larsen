@@ -188,7 +188,7 @@ export function QuickView({ property, onClose }: { property: Property | null; on
 
               {/* card de Andrea */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', border: '1px solid var(--st-line)', borderRadius: 18, padding: '1rem 1.2rem', margin: '1.6rem 0' }}>
-                <Image src={agent.photo} alt={agent.name} width={52} height={52} style={{ borderRadius: 999, objectFit: 'cover', width: 52, height: 52 }} />
+                <Image src={agent.avatar} alt={agent.name} width={52} height={52} style={{ borderRadius: 999, objectFit: 'cover', width: 52, height: 52 }} />
                 <div style={{ minWidth: 140 }}>
                   <div style={{ fontFamily: 'var(--grotesk)', fontWeight: 500 }}>{agent.name}</div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--st-grey)' }}>{agent.rank} · ★ Top producer</div>
