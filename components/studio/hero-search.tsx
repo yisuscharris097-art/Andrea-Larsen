@@ -177,13 +177,12 @@ export default function HeroSearch() {
                   <input
                     ref={inputRef}
                     value={locValue}
-                    onChange={(e) => { setQ(e.target.value); setCity(''); setOpen(true); setActive(-1); }}
-                    onFocus={() => q && setOpen(true)}
-                    onBlur={() => setTimeout(() => setOpen(false), 140)}
-                    onKeyDown={onKey}
-                    placeholder="City, neighborhood or address"
-                    aria-label="Location" aria-expanded={open} aria-autocomplete="list"
-                    role="combobox" aria-controls="hs-suggest"
+                    readOnly
+                    onMouseDown={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-search')); }}
+                    onFocus={() => window.dispatchEvent(new Event('open-search'))}
+                    placeholder="Try “waterfront under $3M” — or ⌘K"
+                    aria-label="Search in natural language" role="button"
+                    style={{ cursor: 'pointer' }}
                   />
                   {open && sugg.length > 0 && (
                     <div className="hs-suggest" id="hs-suggest" role="listbox">

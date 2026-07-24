@@ -7,6 +7,7 @@ import Manifesto from '@/components/studio/manifesto';
 import Stats from '@/components/studio/stats';
 import TrackRecord from '@/components/studio/track-record';
 import Reels from '@/components/studio/reels';
+import SearchCommand from '@/components/studio/search-command';
 import HeroSearch from '@/components/studio/hero-search';
 import ValuationCta from '@/components/studio/valuation-cta';
 import Mist from '@/components/studio/mist';
@@ -44,6 +45,8 @@ export default function Home() {
     <main className="st" id="top">
       <CursorFX />
       <Curtain />
+      {/* NUEVA · Búsqueda en lenguaje natural (takeover ⌘K) */}
+      <SearchCommand />
       {/* 1 · EL DESCENSO — intocable en su mecánica, overlay v2 */}
       <HeroDescent />
       {/* libera el gate si la home monta ya scrolleada (volver desde una propiedad) */}
